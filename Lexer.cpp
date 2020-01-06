@@ -1,16 +1,9 @@
 //
 // Created by yoavst22 on 18/12/2019.
 //
-using namespace std;
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <list>
-#include <fstream>
-class Lexer {
- public:
+#include "Lexer.h"
   //this function delete the spaces in the string, unless the space is in " "
-  string delete_spaces(string str) {
+  string Lexer::delete_spaces(string str) {
     int isQuote = 0; //are we inside a ""
     for(int i = 0; i< str.length(); i++) {
       if(str[i] == '"') {
@@ -32,9 +25,7 @@ class Lexer {
   }
 
 
-  list<string>* lexer(string file_name) {
-
-
+  list<string>* Lexer::lexer(string file_name) {
     auto lst = new list<string>();
 
     ifstream infile(file_name);
@@ -110,4 +101,3 @@ class Lexer {
     }
     return lst;
   }
-};
