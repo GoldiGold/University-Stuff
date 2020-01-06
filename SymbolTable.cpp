@@ -32,5 +32,3 @@ class SymbolTable {
     return m->at(name)->GetSim();
   }
 };
-	}
-};
