@@ -97,7 +97,6 @@
           str = str.substr(space + 1, str.length());
         }
       }
-      lst->push_back(";"); // end of line
     }
     return lst;
   }
