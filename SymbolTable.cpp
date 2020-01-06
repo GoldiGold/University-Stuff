@@ -7,36 +7,30 @@ using namespace std;
 #include <string>
 #include <map>
 class SymbolTable {
-	map<string, ProgVar> *m;
+  map<string, ProgVar*>* m;
  public:
-	SymbolTable() {
-		this->m = new map<string, ProgVar>();
-	}
-	~SymbolTable() {
-		delete m;
-	}
+  SymbolTable() {
+    this->m = new map<string, ProgVar*>();
+  }
+  ~SymbolTable() {
+    delete m;
+  }
 
-	map<string, ProgVar> *getMap() {
-		return this->m;
-	}
+  void add(string name, double val, string simulator) {
+    m->insert(pair<string, ProgVar*>(name, new ProgVar(val, simulator)));
+  }
 
-	void add(string name, double val, string simulator) {
-		m->insert(pair<string, ProgVar>(name, ProgVar(val, simulator)));
-	}
+  ProgVar* get(string name) {
+    return m->at(name);
+  }
 
-	ProgVar &get(string name) {
-		return m->at(name);
-	}
+  double getVal(string name) {
+    return m->at(name)->GetValue();
+  }
 
-	double getVal(string name) {
-		return m->at(name).GetValue();
-	}
-
-	string getSim(string name) {
-		return m->at(name).GetSim();
-	}
-
-	void setVal(string name, double val) {
-		this->m->at(name).SetValue(val);
+  string getSim(string name) {
+    return m->at(name)->GetSim();
+  }
+};
 	}
 };
