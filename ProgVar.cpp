@@ -5,7 +5,7 @@
 using namespace std;
 #include <string>
 #include <list>
-#include <hash_map>
+//#include <hash_map>
 class ProgVar {
   double value;
   string sim;
