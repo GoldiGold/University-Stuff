@@ -7,8 +7,13 @@ set(CMAKE_CXX_FLAGS "-pthread")
 
 add_executable(Advanced1_HW3
         Command.h
+        Condition.h
+        Condition.cpp
         ConnectClientCommand.h
         ConnectClientCommand.cpp
+        ex1.h
+        ex1.cpp
+        Expression.h
         Lexer.h
         Lexer.cpp
         main.cpp
