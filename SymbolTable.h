@@ -18,6 +18,8 @@ class SymbolTable {
 	ProgVar *get(string name) { return m->at(name); }
 
 	double getVal(string name) { return m->at(name)->GetValue(); }
+	
+	void setVal(string name, double val) { m->at(name)->SetValue(val); }
 
 	string getSim(string name) { return m->at(name)->GetSim(); }
 
