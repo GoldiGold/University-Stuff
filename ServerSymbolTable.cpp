@@ -6,6 +6,8 @@
 
 ServerSymbolTable::ServerSymbolTable() {
 	this->m = new std::map<std::string, std::list<std::string> *>();
+	// INITIALIZING THE 36 KEYS - PATHS, OF THE SERVER SYMBOL TABLE.
+
 }
 ServerSymbolTable::~ServerSymbolTable() {
 	delete this->m;
@@ -13,17 +15,57 @@ ServerSymbolTable::~ServerSymbolTable() {
 
 void ServerSymbolTable::add(std::string path, std::string varName) {
 	using namespace std;
-	if (this->m->find(path) != this->m->end()) {
-		list<std::string> *list_at_path = this->m->at(path);
-		// if the variable doesn't exist then we need to do add it. If it exist we aren't going to add it again.
-		if (std::find(list_at_path->begin(), list_at_path->end(), varName) == list_at_path->end()) {
-			this->m->at(path)->push_front(varName);
+	if (path.empty()) {
+		// Do Nothing, even if we have a varName or not, we can't do anything.
+	} else if (!path.empty() && varName.empty()) {
+		// the path isn't in the map
+		if (this->m->find(path) == this->m->end()) {
+			this->m->insert({path, nullptr});
 		}
-	} else {
-		auto insert = new std::list<std::string>;
-		insert->push_front(varName);
-		this->m->insert({path, insert});
+		// else do nothing because there is nothing to insert.
+	} else if (!path.empty() && !varName.empty()) {
+		// the path isn't in the map
+		if (this->m->find(path) == this->m->end()) {
+			auto insert_list = new list<string>();
+			insert_list->push_front(varName);
+			this->m->insert({path, insert_list});
+		} else {
+			auto list_at_path = this->m->at(path);
+			// the list isn't null
+			if (list_at_path != nullptr) {
+				// but the list doesn't contain the varName
+				if (find(list_at_path->begin(), list_at_path->end(), varName) == list_at_path->end()) {
+					list_at_path->push_front(varName);
+				}
+				// else do nothing because the varName is in the list already.
+			} else {
+				// the path exist but the list is null, so we need to create the new list.
+				auto insert_list = new list<string>();
+				insert_list->push_front(varName);
+				this->m->at(path) = insert_list;
+			}
+		}
 	}
+	/**
+	 * That was the previous version
+	 */
+	// Checking if the path - the key exist already in the map
+//	if (this->m->find(path) != this->m->end()) {
+//		list<std::string> *list_at_path = this->m->at(path);
+//		// if the variable doesn't exist then we need to do add it. If it exist we aren't going to add it again.
+//		if (list_at_path == nullptr){
+//			auto insert = new std::list<std::string>;
+//			insert->push_front(varName);
+//		}
+//
+//		if (std::find(list_at_path->begin(), list_at_path->end(), varName) == list_at_path->end()) {
+//			this->m->at(path)->push_front(varName);
+//		}
+//	} else {
+//		auto insert_list = new std::list<std::string>;
+//		insert_list->push_front(varName);
+//		this->m->insert({path, insert_list});
+//	}
 }
 
 void ServerSymbolTable::updateAtSymbolTable(std::string path, double value, SymbolTable *symbol_table) {

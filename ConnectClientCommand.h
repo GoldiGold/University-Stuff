@@ -23,17 +23,17 @@ class ConnectClientCommand : public Command {
 	virtual ~ConnectClientCommand();
 
 //	int connectToServer();
-	sockaddr_in *GetServAddr() const;
+	sockaddr_in *GetServAddr();
 	void SetServAddr(sockaddr_in *serv_addr);
-	const char *GetIpAddress() const;
+	const char *GetIpAddress();
 	void SetIpAddress(const char *ip_address);
-	int GetPort() const;
+	int GetPort();
 	void SetPort(int port);
-	int GetSockfd() const;
+	int GetSockfd();
 	void SetSockfd(int sockfd);
 	int execute(std::string var) override; // SENDING THE MESSAGE
 
-	int updateVarInSimulator(std::string varName, int newVarValue, SymbolTable *sm);
+	int updateVarInSimulator();
 
 };
 

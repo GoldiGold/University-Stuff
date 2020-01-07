@@ -26,10 +26,31 @@ int connectToServer(ConnectClientCommand *connect_client_command) {
 		std::cerr << "\ncould not connect to host server\n" << std::endl;
 		return -2;
 	}
+
+	while (!SingletonObj::getInstance()->IsShouldStopClientThread()){
+		connect_client_command->updateVarInSimulator();
+		// WAITING SO WE WILL NOT ENTER SO MANY FUNCTIONS ALL THE TIME.
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	}
 	/**
 	 * WE MIGHT RETURN THE NEW_SOCKET AND THEN READ FROM ITS ADDRESS.
 	 */
 	return connect_client_command->GetSockfd(); // so we will know where to send messages NOT REALLY NEEDED SINCE THE SEND/WRITE FUNCTION IS OF THE CLASS.
+}
+
+int ConnectClientCommand::updateVarInSimulator(/*std::string varName, int newVarValue, SymbolTable *sm*/) {
+	// If there is a message waiting in the update queue
+	std::string message;
+	ssize_t return_val;
+	SingletonObj *single = SingletonObj::getInstance();
+	if (!single->GetMessagesQueue()->empty()) {
+		message = "set " + single->GetSymbolTable()->getSim(single->GetMessagesQueue()->front().first) + " "
+			+ std::to_string(single->GetMessagesQueue()->front().second) + "\r\n";
+		single->GetMessagesQueue()->pop();
+		return_val = write(this->sockfd, message.c_str(), message.length());
+		return return_val; // A message was sent.
+	}
+	return -1; // No message was sent
 }
 
 int ConnectClientCommand::execute(std::string var) {
@@ -52,33 +73,26 @@ int ConnectClientCommand::execute(std::string var) {
 	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
-int ConnectClientCommand::updateVarInSimulator(std::string varName, int newVarValue, SymbolTable *sm) {
-	std::string message = "set " + sm->getSim(varName) + " " + std::to_string(newVarValue) + "\r\n";
-	ssize_t return_val;
-	// Send message to the server
-	return_val = write(this->sockfd, message.c_str(), message.length());
 
-	return return_val; // IF bigger than 0 then succeeded in sending the message.
-}
-sockaddr_in *ConnectClientCommand::GetServAddr() const {
+sockaddr_in *ConnectClientCommand::GetServAddr() {
 	return serv_addr;
 }
 void ConnectClientCommand::SetServAddr(sockaddr_in *serv_addr) {
 	ConnectClientCommand::serv_addr = serv_addr;
 }
-const char *ConnectClientCommand::GetIpAddress() const {
+const char *ConnectClientCommand::GetIpAddress() {
 	return ipAddress;
 }
 void ConnectClientCommand::SetIpAddress(const char *ip_address) {
 	ipAddress = ip_address;
 }
-int ConnectClientCommand::GetPort() const {
+int ConnectClientCommand::GetPort() {
 	return port;
 }
 void ConnectClientCommand::SetPort(int port) {
 	ConnectClientCommand::port = port;
 }
-int ConnectClientCommand::GetSockfd() const {
+int ConnectClientCommand::GetSockfd() {
 	return sockfd;
 }
 void ConnectClientCommand::SetSockfd(int sockfd) {

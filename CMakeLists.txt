@@ -11,9 +11,6 @@ add_executable(Advanced1_HW3
         Condition.cpp
         ConnectClientCommand.h
         ConnectClientCommand.cpp
-        ex1.h
-        ex1.cpp
-        Expression.h
         Lexer.h
         Lexer.cpp
         main.cpp
@@ -29,6 +26,9 @@ add_executable(Advanced1_HW3
         DefineVarLeftCommand.h
         DefineVarRightCommand.cpp
         DefineVarRightCommand.h
+        ex1.h
+        ex1.cpp
+        Expression.h
         SingletonObj.cpp
         SingletonObj.h
         DefineVarEqCommand.cpp

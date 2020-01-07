@@ -10,6 +10,7 @@
 #include "SymbolTable.h"
 #include <string>
 #include <queue>
+#include "ex1.h"
 
 class SingletonObj {
  private:
@@ -19,6 +20,15 @@ class SingletonObj {
 	SymbolTable *symbol_table_;
 	ServerSymbolTable *server_symbol_table_;
 	std::queue<std::pair<std::string, int>> *messages_queue_;
+	bool should_stop_client_thread;
+	bool should_stop_server_thread;
+	Interpreter* singleInterpreter;
+ public:
+	bool IsShouldStopClientThread();
+	void SetShouldStopClientThread(bool should_stop_client_thread);
+	bool IsShouldStopServerThread();
+	void SetShouldStopServerThread(bool should_stop_server_thread);
+ private:
 
 	/* Private constructor to prevent instancing. */
 	SingletonObj();

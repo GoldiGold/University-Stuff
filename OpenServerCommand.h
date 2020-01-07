@@ -20,11 +20,11 @@ class OpenServerCommand : public Command {
 
 	virtual ~OpenServerCommand();
 
-	sockaddr_in *GetServAddr() const;
+	sockaddr_in *GetServAddr() ;
 	void SetServAddr(sockaddr_in *serv_addr);
-	int GetPort() const;
+	int GetPort() ;
 	void SetPort(int port);
-	int GetSockfd() const;
+	int GetSockfd() ;
 	void SetSockfd(int sockfd);
 //	int acceptClient();
 

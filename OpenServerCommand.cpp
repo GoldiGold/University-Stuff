@@ -60,19 +60,19 @@ int OpenServerCommand::execute(std::string var) {
 	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
-sockaddr_in *OpenServerCommand::GetServAddr() const {
+sockaddr_in *OpenServerCommand::GetServAddr()  {
 	return serv_addr;
 }
 void OpenServerCommand::SetServAddr(sockaddr_in *serv_addr) {
 	OpenServerCommand::serv_addr = serv_addr;
 }
-int OpenServerCommand::GetPort() const {
+int OpenServerCommand::GetPort()  {
 	return port;
 }
 void OpenServerCommand::SetPort(int port) {
 	OpenServerCommand::port = port;
 }
-int OpenServerCommand::GetSockfd() const {
+int OpenServerCommand::GetSockfd()  {
 	return sockfd;
 }
 void OpenServerCommand::SetSockfd(int sockfd) {
