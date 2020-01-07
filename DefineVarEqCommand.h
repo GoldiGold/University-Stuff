@@ -15,6 +15,6 @@ class DefineVarEqCommand: public Command {
  public:
 	DefineVarEqCommand(SymbolTable* symt, std::string varName, double value){st = symt; name = varName; val = value;}
 	int execute(std::string var);
-	virtual ~DefineVarEqCommand(){}
+	virtual ~DefineVarEqCommand() {}
 };
 #endif //ADVANCED1_HW3__DEFINEVAREQCOMMAND_H_
