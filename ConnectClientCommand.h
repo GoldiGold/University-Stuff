@@ -6,8 +6,9 @@
 #define ADVANCED1_HW3__CONNECTCLIENTCOMMAND_H_
 
 #include "Command.h"
+#include <thread>
 #include <arpa/inet.h>
-#include "SymbolTable.h"
+#include "SingletonObj.h"
 
 class ConnectClientCommand : public Command {
  protected:
@@ -21,8 +22,15 @@ class ConnectClientCommand : public Command {
 
 	virtual ~ConnectClientCommand();
 
-	int connectToServer();
-
+//	int connectToServer();
+	sockaddr_in *GetServAddr() const;
+	void SetServAddr(sockaddr_in *serv_addr);
+	const char *GetIpAddress() const;
+	void SetIpAddress(const char *ip_address);
+	int GetPort() const;
+	void SetPort(int port);
+	int GetSockfd() const;
+	void SetSockfd(int sockfd);
 	int execute(std::string var) override; // SENDING THE MESSAGE
 
 	int updateVarInSimulator(std::string varName, int newVarValue, SymbolTable *sm);

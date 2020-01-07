@@ -6,7 +6,8 @@
 #define ADVANCED1_HW3__OPENSERVERCOMMAND_H_
 
 #include "Command.h"
-
+#include <thread>
+#include "SingletonObj.h"
 
 class OpenServerCommand : public Command {
  protected:
@@ -19,7 +20,13 @@ class OpenServerCommand : public Command {
 
 	virtual ~OpenServerCommand();
 
-	int acceptClient();
+	sockaddr_in *GetServAddr() const;
+	void SetServAddr(sockaddr_in *serv_addr);
+	int GetPort() const;
+	void SetPort(int port);
+	int GetSockfd() const;
+	void SetSockfd(int sockfd);
+//	int acceptClient();
 
 	int execute(std::string var) override; // SENDING THE MESSAGE
 

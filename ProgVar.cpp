@@ -3,7 +3,7 @@
 //
 
 #include "ProgVar.h"
-ProgVar::ProgVar(double val, string simulator) {
+ProgVar::ProgVar(double val, std::string simulator) {
   this->value = val;
   this->sim = simulator;
 }

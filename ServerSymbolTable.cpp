@@ -12,6 +12,7 @@ ServerSymbolTable::~ServerSymbolTable() {
 }
 
 void ServerSymbolTable::add(std::string path, std::string varName) {
+	using namespace std;
 	if (this->m->find(path) != this->m->end()) {
 		list<std::string> *list_at_path = this->m->at(path);
 		// if the variable doesn't exist then we need to do add it. If it exist we aren't going to add it again.
@@ -26,6 +27,7 @@ void ServerSymbolTable::add(std::string path, std::string varName) {
 }
 
 void ServerSymbolTable::updateAtSymbolTable(std::string path, double value, SymbolTable *symbol_table) {
+	using namespace std;
 	// If this path exists
 	if (this->m->find(path) != this->m->end()) {
 		list<std::string> *list_at_path = this->m->at(path);

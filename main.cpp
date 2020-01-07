@@ -1,5 +1,5 @@
 #include <iostream>
-#include <thread>
+//#include <thread>
 //#include <list>
 //#include <string>
 #include "ProgVar.h"
@@ -8,12 +8,12 @@ std::mutex mutex_lock;
 static int counter = 0;
 
 void inc() {
-	std::cout << "in function inc thread num is:" << std::this_thread::get_id() << " " << std::endl;
+//	std::cout << "in function inc thread num is:" << std::this_thread::get_id() << " " << std::endl;
 
 	for (int i = 0; i < 4; ++i) {
 		mutex_lock.lock();
 		++counter;
-		std::cout << "in for loop in inc, thread num is:" << std::this_thread::get_id() << std::endl;
+//		std::cout << "in for loop in inc, thread num is:" << std::this_thread::get_id() << std::endl;
 		mutex_lock.unlock();
 	}
 }

@@ -3,6 +3,6 @@
 //
 
 #include "DefineVarEqCommand.h"
-int DefineVarEqCommand::execute(string var){
-  this->st->add(name, val, "");
+int DefineVarEqCommand::execute(std::string var){
+	this->st->add(name, val, "");
 }

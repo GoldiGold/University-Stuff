@@ -3,7 +3,7 @@
 //
 #include "Lexer.h"
 //this function delete the spaces in the string, unless the space is in " "
-string Lexer::delete_spaces(string str) {
+std::string Lexer::delete_spaces(std::string str) {
 	int isQuote = 0; //are we inside a ""
 	for (int i = 0; i < str.length(); i++) {
 		if (str[i] == '"') {
@@ -24,7 +24,8 @@ string Lexer::delete_spaces(string str) {
 	return str;
 }
 
-list<string> *Lexer::lexer(string file_name) {
+std::list<std::string> *Lexer::lexer(std::string file_name) {
+	using namespace std;
 	auto lst = new list<string>();
 
 	ifstream infile(file_name);

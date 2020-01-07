@@ -10,6 +10,36 @@ OpenServerCommand::OpenServerCommand(int port) {
 
 OpenServerCommand::~OpenServerCommand() = default;
 
+
+int acceptClient(OpenServerCommand *open_server_command) {
+	int bind_flag = bind(open_server_command->GetSockfd(),
+						 (struct sockaddr *) (open_server_command->GetServAddr()),
+						 sizeof(open_server_command->GetServAddr()));
+	int new_socket;
+	if (bind_flag < 0) {
+		std::cerr << "bind failed" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	if (listen(open_server_command->GetSockfd(), 1) < 0) {
+		std::cerr << "listen error" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	if ((new_socket = accept(open_server_command->GetSockfd(), (struct sockaddr *) open_server_command->GetServAddr(),
+							 (socklen_t *) open_server_command->GetServAddr())) < 0) {
+		std::cerr << "accept error" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	SingletonObj::getInstance()->SetGlobalHasServerOpened(true);
+
+	// TODO: NEED TO HAVE THE ACCEPT MESSAGE FUNCTION. THE FUNCTION THAT READS THE VALUES. THE FUNC THAT UPDATES THE
+	//TODO: SYMBOL TABLE OF THE (PATH, VARS) (AND THEN THE VALUES OF THE VARS).
+
+	/**
+	 * WE MIGHT RETURN THE NEW_SOCKET AND THEN READ FROM ITS ADDRESS.
+	 */
+	return new_socket; //so we will have the new socket we listen to.
+}
+
 int OpenServerCommand::execute(std::string var) {
 	//TODO: CHECK IF THE SOCKET OPENING IS A BLOCKING FUNCTION - NEEDS TO OPEN A THREAD TO IT OTHERWISE IT WILL STUCK
 	//TODO: THE WHOLE PROGRAM
@@ -25,33 +55,26 @@ int OpenServerCommand::execute(std::string var) {
 
 
 //	TODO: CREATE THE THREAD AND START RECEIVING STUFF ( OFR SOMEHOW, TALK TO MILO)
-	std::thread openServer(&OpenServerCommand::acceptClient);
+	std::thread openServer(acceptClient, this);
+	openServer.detach();
 	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
-int OpenServerCommand::acceptClient() {
-	int bind_flag = bind(this->sockfd, (struct sockaddr *) &(this->serv_addr), sizeof(this->serv_addr));
-	int new_socket;
-	if (bind_flag < 0) {
-		std::cerr << "bind failed" << std::endl;
-		exit(EXIT_FAILURE);
-	}
-	if (listen(this->sockfd, 1) < 0) {
-		perror("listen");
-		exit(EXIT_FAILURE);
-	}
-	if ((new_socket = accept(this->sockfd, (struct sockaddr *) &this->serv_addr,
-							 (socklen_t *) &this->serv_addr)) < 0) {
-		perror("accept");
-		exit(EXIT_FAILURE);
-	}
-	global_has_server_opened = true;
-
-	// TODO: NEED TO HAVE THE ACCEPT MESSAGE FUNCTION. THE FUNCTION THAT READS THE VALUES. THE FUNC THAT UPDATES THE
-	//TODO: SYMBOL TABLE OF THE (PATH, VARS) (AND THEN THE VALUES OF THE VARS).
-
-	/**
-	 * WE MIGHT RETURN THE NEW_SOCKET AND THEN READ FROM ITS ADDRESS.
-	 */
-	return new_socket; //so we will have the new socket we listen to.
+sockaddr_in *OpenServerCommand::GetServAddr() const {
+	return serv_addr;
+}
+void OpenServerCommand::SetServAddr(sockaddr_in *serv_addr) {
+	OpenServerCommand::serv_addr = serv_addr;
+}
+int OpenServerCommand::GetPort() const {
+	return port;
+}
+void OpenServerCommand::SetPort(int port) {
+	OpenServerCommand::port = port;
+}
+int OpenServerCommand::GetSockfd() const {
+	return sockfd;
+}
+void OpenServerCommand::SetSockfd(int sockfd) {
+	OpenServerCommand::sockfd = sockfd;
 }

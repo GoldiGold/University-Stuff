@@ -3,6 +3,6 @@
 //
 
 #include "SymbolTable.h"
-void SymbolTable::add(string name, double val, string simulator) {
-  m->insert(pair<string, ProgVar*>(name, new ProgVar(val, simulator)));
+void SymbolTable::add(std::string name, double val, std::string simulator) {
+  m->insert(std::pair<std::string, ProgVar*>(name, new ProgVar(val, simulator)));
 }
