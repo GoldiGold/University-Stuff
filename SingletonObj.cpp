@@ -4,10 +4,10 @@
 
 #include "SingletonObj.h"
 /* Null, because instance will be initialized on demand. */
-SingletonObj *SingletonObj::instance = 0;
+SingletonObj *SingletonObj::instance = nullptr;
 
 SingletonObj *SingletonObj::getInstance() {
-	if (instance == 0) {
+	if (instance == nullptr) {
 		instance = new SingletonObj();
 	}
 
@@ -16,9 +16,12 @@ SingletonObj *SingletonObj::getInstance() {
 
 SingletonObj::SingletonObj() {
 	this->global_has_server_opened_ = false;
-	this->symbol_table_ = new SymbolTable;
-	this->server_symbol_table_ = new ServerSymbolTable;
-	this->messages_queue_ = new std::queue<std::pair<std::string, int>>;
+	this->symbol_table_ = new SymbolTable();
+	this->server_symbol_table_ = new ServerSymbolTable();
+	this->messages_queue_ = new std::queue<std::pair<std::string, int>>();
+	this->should_stop_client_thread = false;
+	this->should_stop_server_thread = false;
+	this->singleInterpreter = new Interpreter();
 }
 bool SingletonObj::IsGlobalHasServerOpened() {
 	return global_has_server_opened_;
@@ -43,4 +46,16 @@ std::queue<std::pair<std::string, int>> *SingletonObj::GetMessagesQueue() {
 }
 void SingletonObj::SetMessagesQueue(std::queue<std::pair<std::string, int>> *messages_queue) {
 	messages_queue_ = messages_queue;
+}
+bool SingletonObj::IsShouldStopClientThread() {
+	return should_stop_client_thread;
+}
+void SingletonObj::SetShouldStopClientThread(bool should_stop_client_thread) {
+	SingletonObj::should_stop_client_thread = should_stop_client_thread;
+}
+bool SingletonObj::IsShouldStopServerThread() {
+	return should_stop_server_thread;
+}
+void SingletonObj::SetShouldStopServerThread(bool should_stop_server_thread) {
+	SingletonObj::should_stop_server_thread = should_stop_server_thread;
 }
