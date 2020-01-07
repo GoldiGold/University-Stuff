@@ -17,6 +17,6 @@ class DefineVarLeftCommand: public Command {
  public:
 	DefineVarLeftCommand(SymbolTable* symt, ServerSymbolTable* ssymt, std::string varName, std::string simulator);
 	int execute(std::string var);
-	virtual ~DefineVarLeftCommand() {delete st; delete sst;}
+	virtual ~DefineVarLeftCommand() {}
 };
 #endif //ADVANCED1_HW3__DEFINEVARLEFTCOMMAND_H_
