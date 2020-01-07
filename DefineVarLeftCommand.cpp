@@ -3,14 +3,14 @@
 //
 #include "DefineVarLeftCommand.h"
 DefineVarLeftCommand::DefineVarLeftCommand(SymbolTable* symt, ServerSymbolTable* ssymt,
-    string varName, string simulator){
-  st = symt;
-  sst = ssymt;
-  name = varName;
-  sim = simulator;
+										   std::string varName, std::string simulator){
+	st = symt;
+	sst = ssymt;
+	name = varName;
+	sim = simulator;
 }
-int DefineVarLeftCommand::execute(string var){
-  this->st->add(name, 0, nullptr);
-  this->sst->add(sim, name);
-  return 0;
+int DefineVarLeftCommand::execute(std::string var){
+	this->st->add(name, 0, nullptr);
+	this->sst->add(sim, name);
+	return 0;
 }

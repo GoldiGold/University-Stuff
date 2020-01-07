@@ -6,7 +6,7 @@
 #define ADVANCED1_HW3__COMMAND_H_
 #include <string>
 #include <iostream>
-#include <thread>
+//#include <thread>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -14,7 +14,6 @@
  * Command Interface
  */
 
-extern bool global_has_server_opened;
 class Command {
  public:
 	virtual int execute(std::string var) = 0;

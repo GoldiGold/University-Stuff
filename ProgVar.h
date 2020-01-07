@@ -4,17 +4,16 @@
 
 #ifndef ADVANCED1_HW3__PROGVAR_H_
 #define ADVANCED1_HW3__PROGVAR_H_
-using namespace std;
 #include <string>
 class ProgVar {
   double value;
-  string sim;
+	std::string sim;
  public:
-  ProgVar(double val, string simulator);
+  ProgVar(double val, std::string simulator);
   virtual ~ProgVar() {}
-  const string &GetSim() const {return sim;}
+  const std::string &GetSim() const {return sim;}
   double GetValue() const {return value;}
   void SetValue(double value) {ProgVar::value = value;}
-  void SetSim(const string &sim) {ProgVar::sim = sim;}
+  void SetSim(const std::string &sim) {ProgVar::sim = sim;}
 };
 #endif //ADVANCED1_HW3__PROGVAR_H_
