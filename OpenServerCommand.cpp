@@ -26,7 +26,7 @@ int OpenServerCommand::execute(std::string var) {
 
 //	TODO: CREATE THE THREAD AND START RECEIVING STUFF ( OFR SOMEHOW, TALK TO MILO)
 	std::thread openServer(&OpenServerCommand::acceptClient);
-	return 1;
+	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
 int OpenServerCommand::acceptClient() {
@@ -53,5 +53,5 @@ int OpenServerCommand::acceptClient() {
 	/**
 	 * WE MIGHT RETURN THE NEW_SOCKET AND THEN READ FROM ITS ADDRESS.
 	 */
-	return 1;
+	return new_socket; //so we will have the new socket we listen to.
 }

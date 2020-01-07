@@ -6,6 +6,8 @@
 #define ADVANCED1_HW3__OPENSERVERCOMMAND_H_
 
 #include "Command.h"
+
+
 class OpenServerCommand : public Command {
  protected:
 	struct sockaddr_in *serv_addr;

@@ -27,7 +27,7 @@ int ConnectClientCommand::execute(std::string var) {
 
 //	TODO: CREATE THE THREAD AND START SENDING STUFF ( OFR SOMEHOW, TALK TO MILO)
 	std::thread connectClient(&ConnectClientCommand::connectToServer);
-	return 1;
+	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
 int ConnectClientCommand::connectToServer() {
@@ -44,7 +44,19 @@ int ConnectClientCommand::connectToServer() {
 		std::cerr << "\ncould not connect to host server\n" << std::endl;
 		return -2;
 	}
+
+	/**
+	 * WE MIGHT RETURN THE NEW_SOCKET AND THEN READ FROM ITS ADDRESS.
+	 */
+
 	return 1;
 }
+int ConnectClientCommand::updateVarInSimulator(std::string varName, int newVarValue, SymbolTable *sm) {
+	std::string message = "set " + sm->getSim(varName) + " " + std::to_string(newVarValue) + "\r\n";
+	ssize_t return_val;
+	// Send message to the server
+	return_val = write(sockfd, message.c_str(), message.length());
 
+	return return_val; // IF bigger than 0 then succeeded in sending the message.
+}
 //TODO: NEED TO HAVE A "SEND" FUNCTION - IN THE MAIN PROBABLY, TO SEND THE MESSAGES WITH THE CLIENT.

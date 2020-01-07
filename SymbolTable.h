@@ -9,16 +9,19 @@ using namespace std;
 #include <string>
 #include <map>
 class SymbolTable {
-  map<string, ProgVar*>* m;
+	map<string, ProgVar *> *m;
  public:
-  SymbolTable() {this->m = new map<string, ProgVar*>();}
-  ~SymbolTable() {delete m;}
+	SymbolTable() { this->m = new map<string, ProgVar *>(); }
+	~SymbolTable() { delete m; }
 
-  void add(string name, double val, string simulator);
-  ProgVar* get(string name) {return m->at(name);}
+	void add(string name, double val, string simulator);
+	ProgVar *get(string name) { return m->at(name); }
 
-  double getVal(string name) {return m->at(name)->GetValue();}
+	double getVal(string name) { return m->at(name)->GetValue(); }
 
-  string getSim(string name) {return m->at(name)->GetSim();}
+	string getSim(string name) { return m->at(name)->GetSim(); }
+
+	map<string, ProgVar *> *getMap() { return this->m; }
 };
+
 #endif //ADVANCED1_HW3__SYMBOLTABLE_H_

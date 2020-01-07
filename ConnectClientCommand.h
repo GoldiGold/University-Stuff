@@ -7,6 +7,7 @@
 
 #include "Command.h"
 #include <arpa/inet.h>
+#include "SymbolTable.h"
 
 class ConnectClientCommand : public Command {
  protected:
@@ -23,6 +24,8 @@ class ConnectClientCommand : public Command {
 	int connectToServer();
 
 	int execute(std::string var) override; // SENDING THE MESSAGE
+
+	int updateVarInSimulator(std::string varName, int newVarValue, SymbolTable *sm);
 
 };
 

@@ -4,7 +4,6 @@
 
 #ifndef ADVANCED1_HW3__COMMAND_H_
 #define ADVANCED1_HW3__COMMAND_H_
-using namespace std;
 #include <string>
 #include <iostream>
 #include <thread>

@@ -6,7 +6,7 @@
 #define FLIGHTSIMULATOR__DEFINEVARCOMMAND_H_
 #include "Command.h"
 #include "SymbolTable.h"
-class DefinrVarCommand: public Command {
+class DefineVarCommand: public Command {
   SymbolTable* st;
   //server symbol table
   string name;
@@ -14,8 +14,8 @@ class DefinrVarCommand: public Command {
   string sim;
 
  public:
-  DefinrVarCommand(SymbolTable* symt, string varName, double value, string simulator);
+  DefineVarCommand(SymbolTable* symt, string varName, double value, string simulator);
   int execute(string var);
-  virtual ~DefinrVarCommand() {delete st;}
+  virtual ~DefineVarCommand() {delete st;}
 };
 #endif //FLIGHTSIMULATOR__DEFINEVARCOMMAND_H_
