@@ -10,7 +10,7 @@
 #include <map>
 class SymbolTable {
 	std::map<std::string, ProgVar *> *m;
-	vars = new map<std::string, double>();
+	std::map<std::string, double>* vars;
  public:
 	SymbolTable() { this->m = new std::map<std::string, ProgVar *>(); }
 	~SymbolTable() { delete m; delete vars;}
