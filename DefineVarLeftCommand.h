@@ -5,17 +5,16 @@
 #ifndef ADVANCED1_HW3__DEFINEVARLEFTCOMMAND_H_
 #define ADVANCED1_HW3__DEFINEVARLEFTCOMMAND_H_
 #include "Command.h"
+#include "SingletonObj.h"
 #include "SymbolTable.h"
 #include "ServerSymbolTable.h"
 
 class DefineVarLeftCommand: public Command {
-	SymbolTable* st;
-	ServerSymbolTable* sst;
 	std::string name;
 	std::string sim;
 
  public:
-	DefineVarLeftCommand(SymbolTable* symt, ServerSymbolTable* ssymt, std::string varName, std::string simulator);
+	DefineVarLeftCommand(std::string varName, std::string simulator);
 	int execute(std::string var);
 	virtual ~DefineVarLeftCommand() {}
 };

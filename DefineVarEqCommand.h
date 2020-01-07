@@ -6,14 +6,14 @@
 #define ADVANCED1_HW3__DEFINEVAREQCOMMAND_H_
 #include "Command.h"
 #include "SymbolTable.h"
+#include "SingletonObj.h"
 #include <string>
 class DefineVarEqCommand: public Command {
-	SymbolTable* st;
 	std::string name;
 	double val;
 
  public:
-	DefineVarEqCommand(SymbolTable* symt, std::string varName, double value){st = symt; name = varName; val = value;}
+	DefineVarEqCommand(std::string varName, double value){name = varName; val = value;}
 	int execute(std::string var);
 	virtual ~DefineVarEqCommand() {}
 };

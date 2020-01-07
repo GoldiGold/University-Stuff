@@ -5,11 +5,10 @@
 
 #include "DefineVarRightCommand.h"
 int DefineVarRightCommand::execute(std::string var){
-	this->st->add(name, 0, sim);
+  SingletonObj::getInstance()->GetSymbolTable()->add(name, 0, sim);
 	return 1;
 }
-DefineVarRightCommand::DefineVarRightCommand(SymbolTable* symt, std::string varName, std::string simulator){
-	st = symt;
+DefineVarRightCommand::DefineVarRightCommand(std::string varName, std::string simulator){
 	name = varName;
 	sim = simulator;
 }
