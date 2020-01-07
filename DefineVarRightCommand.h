@@ -14,6 +14,6 @@ class DefineVarRightCommand: public Command {
  public:
 	DefineVarRightCommand(SymbolTable* symt, std::string varName, std::string simulator);
 	int execute(std::string var);
-	virtual ~DefineVarRightCommand() {delete st;}
+	virtual ~DefineVarRightCommand() {}
 };
 #endif //ADVANCED1_HW3__DEFINEVARRIGHTCOMMAND_H_
