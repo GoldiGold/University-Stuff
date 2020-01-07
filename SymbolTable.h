@@ -5,7 +5,7 @@
 #ifndef ADVANCED1_HW3__SYMBOLTABLE_H_
 #define ADVANCED1_HW3__SYMBOLTABLE_H_
 using namespace std;
-#include "ProgVar.cpp"
+#include "ProgVar.h"
 #include <string>
 #include <map>
 class SymbolTable {
@@ -18,7 +18,7 @@ class SymbolTable {
 	ProgVar *get(string name) { return m->at(name); }
 
 	double getVal(string name) { return m->at(name)->GetValue(); }
-	
+
 	void setVal(string name, double val) { m->at(name)->SetValue(val); }
 
 	string getSim(string name) { return m->at(name)->GetSim(); }

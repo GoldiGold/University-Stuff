@@ -2,7 +2,7 @@
 #include <thread>
 //#include <list>
 //#include <string>
-#include "ProgVar.cpp"
+#include "ProgVar.h"
 
 std::mutex mutex_lock;
 static int counter = 0;

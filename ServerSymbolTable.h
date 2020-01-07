@@ -4,12 +4,12 @@
 
 #ifndef ADVANCED1_HW3__SERVERSYMBOLTABLE_H_
 #define ADVANCED1_HW3__SERVERSYMBOLTABLE_H_
-#include "ProgVar.cpp"
+#include "ProgVar.h"
 #include <string>
 #include <map>
 #include <list>
 #include <algorithm>
-#include "SymbolTable.cpp"
+#include "SymbolTable.h"
 
 class ServerSymbolTable {
 	std::map<std::string, std::list<std::string> *> *m;
