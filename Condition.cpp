@@ -3,9 +3,10 @@
 //
 
 #include "Condition.h"
-bool Condition::isTrue(Interpreter* i){
-  double v1 = i->interpret(exp1)->calculate();//calculate the values
-  double v2 = i->interpret(exp2)->calculate();
+bool Condition::isTrue(){
+  //calculate the values:
+  double v1 = SingletonObj::getInstance()->GetInter()->interpret(exp1)->calculate();
+  double v2 = SingletonObj::getInstance()->GetInter()->interpret(exp2)->calculate();
   if(!oper.compare("==")) {
     return (v1 == v2);
   } else if(!oper.compare("<=")) {

@@ -5,7 +5,7 @@
 #ifndef ADVANCED1_HW3__CONDITION_H_
 #define ADVANCED1_HW3__CONDITION_H_
 #include "ex1.h"
-
+#include "SingletonObj.h"
 class Condition {
   std::string exp1;
   std::string exp2;
@@ -16,7 +16,7 @@ class Condition {
     exp2 = expression2;
     oper = operat;
   }
-  bool isTrue(Interpreter* i);
+  bool isTrue();
 
 };
 #endif //ADVANCED1_HW3__CONDITION_H_

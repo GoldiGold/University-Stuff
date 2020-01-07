@@ -4,5 +4,6 @@
 
 #include "DefineVarEqCommand.h"
 int DefineVarEqCommand::execute(std::string var){
-	SingletonObj::getInstance()->GetSymbolTable()->add(name, val, "");
+  double val = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
+  SingletonObj::getInstance()->GetSymbolTable()->add(name, val, "");
 }

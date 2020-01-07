@@ -10,10 +10,10 @@
 #include <string>
 class DefineVarEqCommand: public Command {
 	std::string name;
-	double val;
+	std::string exp;
 
  public:
-	DefineVarEqCommand(std::string varName, double value){name = varName; val = value;}
+	DefineVarEqCommand(std::string varName, std::string exp1){name = varName; exp=exp1;}
 	int execute(std::string var);
 	virtual ~DefineVarEqCommand() {}
 };

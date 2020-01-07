@@ -42,8 +42,10 @@ class SingletonObj {
 	void SetServerSymbolTable(ServerSymbolTable *server_symbol_table);
 	std::queue<std::pair<std::string, int>> *GetMessagesQueue();
 	void SetMessagesQueue(std::queue<std::pair<std::string, int>> *messages_queue);
+    Interpreter* GetInter(){return singleInterpreter;}
 	/* Static access method. */
 	static SingletonObj *getInstance();
+
 };
 
 #endif //ADVANCED1_HW3_SINGLETONOBJ_H_
