@@ -31,7 +31,7 @@ Variable &Variable::operator--(int i) {
 }
 
 // return the first number or operator or variable
-string Interpreter::firstPart(std::string &str) {
+std::string Interpreter::firstPart(std::string &str) {
   using namespace std;
   if (str.length() == 0) {
     throw ("empty string");
