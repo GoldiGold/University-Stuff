@@ -20,10 +20,7 @@ class SymbolTable {
 
 	double getVal(std::string name) { return m->at(name)->GetValue(); }
 
-	void setVal(std::string name, double val) { 
-		m->at(name)->SetValue(val);
-		vars->insert(std::pair<std::string, double>(name, val));
-	}
+	void setVal(std::string name, double val);
 
 	std::string getSim(std::string name) { return m->at(name)->GetSim(); }
 

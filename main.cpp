@@ -8,24 +8,22 @@
 #include "IfCommand.h"
 #include "SleepCommand.h"
 #include "PrintCommand.h"
+#include "PutCommand.h"
+#include "WhileCommand.h"
 int main() {
   using namespace std;
-  auto ic = new IfCommand("4","<=","5");
-  auto dvec2 = new DefineVarEqCommand("x", "5");
-  auto sleep = new SleepCommand("5000");
-  auto p1 = new PrintCommand("777");
-  ic->addCommand(dvec2);
-  ic->addCommand(p1);
-  ic->addCommand(sleep);
-  ic->addCommand(p1);
+  auto wh = new WhileCommand("x","<=","5");
+  auto def = new DefineVarEqCommand("x", "0");
+  auto sleep = new SleepCommand("500");
+  auto p1 = new PrintCommand("x");
+  auto put = new PutCommand("x", "x+1");
+  wh->addCommand(p1);
+  wh->addCommand(sleep);
+  wh->addCommand(put);
 
-
-  ic->execute("");
-  cout<< SingletonObj::getInstance()->GetSymbolTable()->getVal("x")<<endl;
-
-//  auto i = new Interpreter();
-//  i->setVariables(st->getVars());
-
+  def->execute("");
+  wh->execute("");
+//  cout<< SingletonObj::getInstance()->GetSymbolTable()->getVal("x")<<endl;
 
   return 0;
 }
