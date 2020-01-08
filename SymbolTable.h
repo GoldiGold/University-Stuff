@@ -12,7 +12,7 @@ class SymbolTable {
 	std::map<std::string, ProgVar *> *m;
 	std::map<std::string, double>* vars;
  public:
-	SymbolTable() { this->m = new std::map<std::string, ProgVar *>(); }
+	SymbolTable() { this->m = new std::map<std::string, ProgVar *>(); vars = new std::map<std::string, double>();}
 	~SymbolTable() { delete m; delete vars;}
 
 	void add(std::string name, double val, std::string simulator);
