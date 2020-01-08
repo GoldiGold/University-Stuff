@@ -18,7 +18,7 @@ SingletonObj::SingletonObj() {
 	this->global_has_server_opened_ = false;
 	this->symbol_table_ = new SymbolTable();
 	this->server_symbol_table_ = new ServerSymbolTable();
-	this->messages_queue_ = new std::queue<std::pair<std::string, int>>();
+	this->messages_queue_ = new std::queue<std::pair<std::string, double>>();
 	this->should_stop_client_thread = false;
 	this->should_stop_server_thread = false;
 	this->singleInterpreter = new Interpreter();
@@ -41,10 +41,10 @@ ServerSymbolTable *SingletonObj::GetServerSymbolTable() {
 void SingletonObj::SetServerSymbolTable(ServerSymbolTable *server_symbol_table) {
 	server_symbol_table_ = server_symbol_table;
 }
-std::queue<std::pair<std::string, int>> *SingletonObj::GetMessagesQueue() {
+std::queue<std::pair<std::string, double>> *SingletonObj::GetMessagesQueue() {
 	return messages_queue_;
 }
-void SingletonObj::SetMessagesQueue(std::queue<std::pair<std::string, int>> *messages_queue) {
+void SingletonObj::SetMessagesQueue(std::queue<std::pair<std::string, double>> *messages_queue) {
 	messages_queue_ = messages_queue;
 }
 bool SingletonObj::IsShouldStopClientThread() {

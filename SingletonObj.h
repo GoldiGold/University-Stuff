@@ -19,7 +19,7 @@ class SingletonObj {
 	bool global_has_server_opened_;
 	SymbolTable *symbol_table_;
 	ServerSymbolTable *server_symbol_table_;
-	std::queue<std::pair<std::string, int>> *messages_queue_;
+	std::queue<std::pair<std::string, double>> *messages_queue_;
 	bool should_stop_client_thread;
 	bool should_stop_server_thread;
 	Interpreter* singleInterpreter;
@@ -40,14 +40,15 @@ class SingletonObj {
 	void SetSymbolTable(SymbolTable *symbol_table);
 	ServerSymbolTable *GetServerSymbolTable();
 	void SetServerSymbolTable(ServerSymbolTable *server_symbol_table);
-	std::queue<std::pair<std::string, int>> *GetMessagesQueue();
+	std::queue<std::pair<std::string, double>> *GetMessagesQueue();
 	void addMessagesQueue(std::string name, double val) {
-	  messages_queue_->push(std::pair<std::string, int>(name, int(val)));
+	  messages_queue_->push(std::pair<std::string, double>(name, val));
 	}
-	void SetMessagesQueue(std::queue<std::pair<std::string, int>> *messages_queue);
-    	Interpreter* GetInter(){
+	void SetMessagesQueue(std::queue<std::pair<std::string, double>> *messages_queue);
+	Interpreter* GetInter(){
      	 singleInterpreter->setVariables(symbol_table_->getVars());
-     	 return singleInterpreter;}
+     	 return singleInterpreter;
+	}
 	/* Static access method. */
 	static SingletonObj *getInstance();
 
