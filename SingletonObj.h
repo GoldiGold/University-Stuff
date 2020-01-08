@@ -41,6 +41,9 @@ class SingletonObj {
 	ServerSymbolTable *GetServerSymbolTable();
 	void SetServerSymbolTable(ServerSymbolTable *server_symbol_table);
 	std::queue<std::pair<std::string, int>> *GetMessagesQueue();
+	void addMessagesQueue(std::string name, double val) {
+	  messages_queue_->push(std::pair<std::string, int>(name, int(val)));
+	}
 	void SetMessagesQueue(std::queue<std::pair<std::string, int>> *messages_queue);
     	Interpreter* GetInter(){
      	 singleInterpreter->setVariables(symbol_table_->getVars());
