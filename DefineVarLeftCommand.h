@@ -6,10 +6,10 @@
 #define ADVANCED1_HW3__DEFINEVARLEFTCOMMAND_H_
 #include "Command.h"
 #include "SingletonObj.h"
-
+//for code like: var x <- sim("path")
 class DefineVarLeftCommand: public Command {
 	std::string name;
-	std::string sim;
+	std::string sim;//simulator adress
 
  public:
 	DefineVarLeftCommand(std::string varName, std::string simulator);
