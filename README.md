@@ -1,6 +1,8 @@
 # Flight Simulator Project- Advanced1 hw3
 The project is a tool to deal with the Flight Simulator in effective way. The main gets a name of code file, interpret the code inside it, and execute it. The code can change the variables of the Flight Simulator, and also get values from it. For example we can write a simple file that contains code that makes an airplain take off.
 
+##Link to gihub: https://github.com/GoldiGold/University-Stuff
+
 ##Usage
 First we will make sure that all the files are in the same directory (including the code file).
 In order to compile the program we will use this command in the terminal: 
