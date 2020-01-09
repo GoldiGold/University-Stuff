@@ -8,19 +8,19 @@ Parser::Parser(std::list<std::string>* l){
   strList = l;
   commands = new list<Command*>();
   it = strList->begin();
-  while(it != strList->end()) {
-    commands->push_back(createCom());
-    it++;
+  while(it != strList->end()) {//while we not in the end of the list
+    commands->push_back(createCom());//add the command from the function
+    it++;//move one step forward
   }
 }
 
-Command* Parser::createCom(){
+Command* Parser::createCom(){//create one command
   using namespace std;
-  if(!(*it).compare("Print")){
+  if(!(*it).compare("Print")){//print
     it++;
-    auto c = new PrintCommand(*it);
+    auto c = new PrintCommand(*it);//*it is the parameter of print
     return c;
-  } else if(!(*it).compare("Sleep")){
+  } else if(!(*it).compare("Sleep")){//sleep
     it++;
     auto c = new SleepCommand(*it);
     return c;
@@ -33,24 +33,24 @@ Command* Parser::createCom(){
     string port = *(++it);
     auto c = new ConnectClientCommand(ip.c_str(), port);
     return c;
-  } else if(!(*it).compare("var")){
+  } else if(!(*it).compare("var")){//define var commands
     string var = *(++it);
     it++;
-    if(!(*it).compare("->")) {
+    if(!(*it).compare("->")) {//right
       it++;
       string sim = *(++it);
       auto c = new DefineVarRightCommand(var, sim.substr(1, sim.length()-2));
       return c;
-    } else if(!(*it).compare("<-")){
+    } else if(!(*it).compare("<-")){//left
       it++;
       string sim = *(++it);
       auto c = new DefineVarLeftCommand(var, sim.substr(1, sim.length()-2));
       return c;
-    } else if(!(*it).compare("=")){
+    } else if(!(*it).compare("=")){//equal
       string exp = *(++it);
       auto c = new DefineVarEqCommand(var, exp);
       return c;
-    } else {
+    } else {//undefined command
       throw "invalid define var command";
     }
   } else if(!(*it).compare("if")){
