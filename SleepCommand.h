@@ -7,6 +7,8 @@
 #include "Command.h"
 #include "SingletonObj.h"
 #include <string>
+#include <thread>
+#include <chrono>
 class SleepCommand: public Command {
   std::string exp;
 
