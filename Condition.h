@@ -6,6 +6,7 @@
 #define ADVANCED1_HW3__CONDITION_H_
 #include "ex1.h"
 #include "SingletonObj.h"
+//this class is the base for if and while commands
 class Condition {
   std::string exp1;
   std::string exp2;
