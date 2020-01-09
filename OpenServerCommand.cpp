@@ -60,8 +60,9 @@ int acceptClient(OpenServerCommand *open_server_command) {
 		std::string t = buffer;
 		std::vector<std::string> values = split(t, ',');
 		int counter = 0;
-		SingletonObj::getInstance()->server_symbol_table_mutex.lock();
 		SingletonObj::getInstance()->symbol_table_mutex.lock();
+		SingletonObj::getInstance()->server_symbol_table_mutex.lock();
+
 		for (auto const &iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetM()) {
 
 			SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator.first,
@@ -70,9 +71,8 @@ int acceptClient(OpenServerCommand *open_server_command) {
 			++counter;
 			std::cout << "A message has been recieved" << std::endl;
 		}
-		SingletonObj::getInstance()->symbol_table_mutex.unlock();
 		SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
-
+		SingletonObj::getInstance()->symbol_table_mutex.unlock();
 	}
 	close(new_socket);
 	close(open_server_command->GetSockfd());
