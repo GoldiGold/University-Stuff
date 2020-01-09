@@ -4,8 +4,8 @@
 
 #include "OpenServerCommand.h"
 
-OpenServerCommand::OpenServerCommand(int port) {
-	this->port = port;
+OpenServerCommand::OpenServerCommand(std::string exp) {
+	this->port = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
 }
 
 OpenServerCommand::~OpenServerCommand() = default;

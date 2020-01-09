@@ -18,7 +18,7 @@ class ConnectClientCommand : public Command {
 	int sockfd;
 
  public:
-	ConnectClientCommand(const char *ipAddress, int port);
+	ConnectClientCommand(const char *ipAddress, std::string exp);
 
 	virtual ~ConnectClientCommand();
 

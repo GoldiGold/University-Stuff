@@ -4,9 +4,9 @@
 
 #include "ConnectClientCommand.h"
 
-ConnectClientCommand::ConnectClientCommand(const char *ipAddress, int port) {
+ConnectClientCommand::ConnectClientCommand(const char *ipAddress, std::string exp) {
 	this->ipAddress = ipAddress;
-	this->port = port;
+	this->port = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
 }
 
 ConnectClientCommand::~ConnectClientCommand() = default;

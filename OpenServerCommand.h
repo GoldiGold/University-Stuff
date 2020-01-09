@@ -16,7 +16,7 @@ class OpenServerCommand : public Command {
 	int sockfd;
 
  public:
-	explicit OpenServerCommand(int port);
+	explicit OpenServerCommand(std::string exp);
 
 	virtual ~OpenServerCommand();
 
