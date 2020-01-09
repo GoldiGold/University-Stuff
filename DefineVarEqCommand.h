@@ -5,7 +5,6 @@
 #ifndef ADVANCED1_HW3__DEFINEVAREQCOMMAND_H_
 #define ADVANCED1_HW3__DEFINEVAREQCOMMAND_H_
 #include "Command.h"
-#include "SymbolTable.h"
 #include "SingletonObj.h"
 #include <string>
 class DefineVarEqCommand: public Command {

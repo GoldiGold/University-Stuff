@@ -32,4 +32,16 @@ add_executable(Advanced1_HW3
         SingletonObj.cpp
         SingletonObj.h
         DefineVarEqCommand.cpp
-        DefineVarEqCommand.h IfCommand.h IfCommand.cpp WhileCommand.h WhileCommand.cpp SleepCommand.h SleepCommand.cpp PrintCommand.h PrintCommand.cpp PutCommand.h PutCommand.cpp)
+        DefineVarEqCommand.h
+        IfCommand.h
+        IfCommand.cpp
+        WhileCommand.h
+        WhileCommand.cpp
+        SleepCommand.h
+        SleepCommand.cpp
+        PrintCommand.h
+        PrintCommand.cpp
+        PutCommand.h
+        PutCommand.cpp
+        Parser.h
+        Parser.cpp)
