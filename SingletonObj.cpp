@@ -24,9 +24,11 @@ SingletonObj::SingletonObj() {
 	this->singleInterpreter = new Interpreter();
 }
 bool SingletonObj::IsGlobalHasServerOpened() {
+	std::lock_guard<std::mutex> lk(has_opened_mutex);
 	return global_has_server_opened_;
 }
 void SingletonObj::SetGlobalHasServerOpened(bool global_has_server_opened) {
+	std::lock_guard<std::mutex> lk(has_opened_mutex);
 	global_has_server_opened_ = global_has_server_opened;
 }
 SymbolTable *SingletonObj::GetSymbolTable() {
@@ -48,14 +50,18 @@ void SingletonObj::SetMessagesQueue(std::queue<std::pair<std::string, double>> *
 	messages_queue_ = messages_queue;
 }
 bool SingletonObj::IsShouldStopClientThread() {
+	std::lock_guard<std::mutex> lk(client_mutex);
 	return should_stop_client_thread;
 }
 void SingletonObj::SetShouldStopClientThread(bool should_stop_client_thread) {
+	std::lock_guard<std::mutex> lk(client_mutex);
 	SingletonObj::should_stop_client_thread = should_stop_client_thread;
 }
 bool SingletonObj::IsShouldStopServerThread() {
+	std::lock_guard<std::mutex> lk(client_mutex);
 	return should_stop_server_thread;
 }
 void SingletonObj::SetShouldStopServerThread(bool should_stop_server_thread) {
+	std::lock_guard<std::mutex> lk(client_mutex);
 	SingletonObj::should_stop_server_thread = should_stop_server_thread;
 }

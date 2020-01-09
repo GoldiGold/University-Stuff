@@ -29,6 +29,9 @@ class SingletonObj {
 	std::mutex symbol_table_mutex;
 	std::mutex interpreter_mutex;
 	std::mutex message_queue_mutex;
+	std::mutex client_mutex;
+	std::mutex thread_mutex;
+	std::mutex has_opened_mutex;
 
  public:
 	bool IsShouldStopClientThread();
