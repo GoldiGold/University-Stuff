@@ -11,6 +11,7 @@
 #include <string>
 #include <queue>
 #include "ex1.h"
+#include <mutex>
 
 class SingletonObj {
  private:
@@ -22,7 +23,13 @@ class SingletonObj {
 	std::queue<std::pair<std::string, double>> *messages_queue_;
 	bool should_stop_client_thread;
 	bool should_stop_server_thread;
-	Interpreter* singleInterpreter;
+	Interpreter *singleInterpreter;
+ public:
+	std::mutex server_symbol_table_mutex;
+	std::mutex symbol_table_mutex;
+	std::mutex interpreter_mutex;
+	std::mutex message_queue_mutex;
+
  public:
 	bool IsShouldStopClientThread();
 	void SetShouldStopClientThread(bool should_stop_client_thread);
@@ -42,12 +49,12 @@ class SingletonObj {
 	void SetServerSymbolTable(ServerSymbolTable *server_symbol_table);
 	std::queue<std::pair<std::string, double>> *GetMessagesQueue();
 	void addMessagesQueue(std::string name, double val) {
-	  messages_queue_->push(std::pair<std::string, double>(name, val));
+		messages_queue_->push(std::pair<std::string, double>(name, val));
 	}
 	void SetMessagesQueue(std::queue<std::pair<std::string, double>> *messages_queue);
-	Interpreter* GetInter(){
-     	 singleInterpreter->setVariables(symbol_table_->getVars());
-     	 return singleInterpreter;
+	Interpreter *GetInter() {
+		singleInterpreter->setVariables(symbol_table_->getVars());
+		return singleInterpreter;
 	}
 	/* Static access method. */
 	static SingletonObj *getInstance();
