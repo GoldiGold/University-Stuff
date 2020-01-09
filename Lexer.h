@@ -15,5 +15,6 @@ class Lexer {
   //this function delete the spaces in the string, unless the space is in " "
   std::string delete_spaces(std::string str);
   std::list<std::string> *lexer(std::string file_name);
+  void lexCondition(std::list<std::string> * lst, std::string str);
 };
 #endif //ADVANCED1_HW3__LEXER_H_

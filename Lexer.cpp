@@ -24,6 +24,44 @@ std::string Lexer::delete_spaces(std::string str) {
 	return str;
 }
 
+
+void Lexer::lexCondition(std::list<std::string> * lst, std::string str){
+  if (str.find("==")!=-1) {
+    lst->push_back(delete_spaces(str.substr(0, str.find("=="))));
+    lst->push_back("==");
+    str = str.substr(str.find("==")+2, str.length());
+    lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
+  } else if (str.find("<=")!=-1) {
+    lst->push_back(delete_spaces(str.substr(0, str.find("<="))));
+    lst->push_back("<=");
+    str = str.substr(str.find("<=")+2, str.length());
+    lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
+  } else if (str.find(">=")!=-1) {
+    lst->push_back(delete_spaces(str.substr(0, str.find(">="))));
+    lst->push_back(">=");
+    str = str.substr(str.find(">=")+2, str.length());
+    lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
+  } else if (str.find("!=")!=-1) {
+    lst->push_back(delete_spaces(str.substr(0, str.find("!="))));
+    lst->push_back("!=");
+    str = str.substr(str.find("!=")+2, str.length());
+    lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
+  } else if (str.find("<")!=-1) {
+    lst->push_back(delete_spaces(str.substr(0, str.find("<"))));
+    lst->push_back("<");
+    str = str.substr(str.find("<")+1, str.length());
+    lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
+  } else if (str.find(">")!=-1) {
+    lst->push_back(delete_spaces(str.substr(0, str.find(">"))));
+    lst->push_back(">");
+    str = str.substr(str.find(">")+1, str.length());
+    lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
+  }
+  lst->push_back("{");
+}
+
+
+
 std::list<std::string> *Lexer::lexer(std::string file_name) {
 	using namespace std;
 	auto lst = new list<string>();
@@ -34,14 +72,21 @@ std::list<std::string> *Lexer::lexer(std::string file_name) {
 		string str = line;
 
 		while (str.length() > 0) { //split the line. when str is empty we will stop
-			if (str[0] == '=') { // if str starts with =
+		    if(str[0] == ' ' || str[0] == '\t') {
+                str = str.substr(1, str.length());
+                continue;
+			} else if (str[0] == '=') { // if str starts with =
 				lst->push_back("=");
 				str = str.substr(1, str.length());
 				str = delete_spaces(str);
 				lst->push_back(str);
 				str = "";
 				continue;
-			} else if (str.find("openDataServer(") == 0) { // if str starts with openDataServer command
+			} else if (str[0] == '}') { // if str starts with =
+              lst->push_back("}");
+              str = str.substr(1, str.length());
+              continue;
+            } else if (str.find("openDataServer(") == 0) { // if str starts with openDataServer command
 				lst->push_back("openDataServer");
 				str = str.substr(15, (str.length() - 16)); // parameter of openDataServer
 				str = delete_spaces(str);
@@ -62,7 +107,7 @@ std::list<std::string> *Lexer::lexer(std::string file_name) {
 				int left = str.find("<-");
 				int arrow = max(left, right);
 				if (arrow == -1) {
-					continue;
+					continue; //we will lex it as a put command
 				}
 				lst->push_back(delete_spaces(str.substr(0, arrow)));
 				lst->push_back(delete_spaces(str.substr(arrow, 2)));
@@ -80,22 +125,35 @@ std::list<std::string> *Lexer::lexer(std::string file_name) {
 				lst->push_back(delete_spaces(str));
 				str = "";
 				continue;
-			} else if (str.find("->") == 0 || str.find("<-") == 0) { //if str starts with -> or <-
+			} else if (str.find("Sleep(") == 0) { //if str starts with print command
+              lst->push_back("Sleep");
+              str = str.substr(6, (str.length() - 7));
+              lst->push_back(delete_spaces(str));
+              str = "";
+              continue;
+            } else if (str.find("while") == 0) { //if str starts with print command
+              lst->push_back("while");
+              str = str.substr(5, (str.length() - 5));
+              lexCondition(lst, str);
+              str = "";
+              continue;
+            } else if (str.find("if") == 0) { //if str starts with print command
+              lst->push_back("if");
+              str = str.substr(2, (str.length() - 2));
+              lexCondition(lst, str);
+              str = "";
+              continue;
+            } else if (str.find("->") == 0 || str.find("<-") == 0) { //if str starts with -> or <-
 				lst->push_back(str.substr(0, 2));
 				str = str.substr(2, (str.length() - 2));
 				continue;
-			}
-
-			int space = str.find_first_of(" "); // find the first space in order to split by spaces
-			if (space == -1) {
-				lst->push_back(str);
-				str = "";
+			} else if (str.find("=")!=-1) {
+              lst->push_back(delete_spaces(str.substr(0, str.find("="))));
+              str = str.substr(str.find("="), str.length());
+              continue;
 			} else {
-				if (space != 0) { // if the space is not in the start
-					lst->push_back(str.substr(0, space));
-				}
-				str = str.substr(space + 1, str.length());
-			}
+		      throw "invalid line";
+		    }
 		}
 	}
 	return lst;
