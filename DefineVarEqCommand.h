@@ -7,9 +7,11 @@
 #include "Command.h"
 #include "SingletonObj.h"
 #include <string>
+//for code like: var x = 5
+//define variable indipendent wuth the simulator
 class DefineVarEqCommand: public Command {
-	std::string name;
-	std::string exp;
+	std::string name;//var name
+	std::string exp;//var initial value
 
  public:
 	DefineVarEqCommand(std::string varName, std::string exp1){name = varName; exp=exp1;}
