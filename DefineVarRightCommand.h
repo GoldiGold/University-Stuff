@@ -6,7 +6,7 @@
 #define ADVANCED1_HW3__DEFINEVARRIGHTCOMMAND_H_
 #include "Command.h"
 #include "SingletonObj.h"
-for code like: var x -> sim("path")
+//for code like: var x -> sim("path")
 class DefineVarRightCommand: public Command {
 	std::string name;
 	std::string sim;
