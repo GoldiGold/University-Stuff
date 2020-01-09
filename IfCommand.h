@@ -9,8 +9,8 @@
 #include <string>
 #include <list>
 class IfCommand: public Command {
-  Condition* con;
-  std::list<Command*>* commands;
+  Condition* con;//condition
+  std::list<Command*>* commands;//commands to do if the condition is true
 
  public:
   IfCommand(std::string exp1, std::string oper, std::string exp2);
