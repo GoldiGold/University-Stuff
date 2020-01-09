@@ -6,7 +6,6 @@
 #define ADVANCED1_HW3__WHILECOMMAND_H_
 #include "Command.h"
 #include "Condition.h"
-#include "SingletonObj.h"
 #include <string>
 #include <list>
 class WhileCommand: public Command {

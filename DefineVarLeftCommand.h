@@ -6,8 +6,6 @@
 #define ADVANCED1_HW3__DEFINEVARLEFTCOMMAND_H_
 #include "Command.h"
 #include "SingletonObj.h"
-#include "SymbolTable.h"
-#include "ServerSymbolTable.h"
 
 class DefineVarLeftCommand: public Command {
 	std::string name;

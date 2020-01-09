@@ -2,8 +2,8 @@
 // Created by yoavst22 on 09/11/2019.
 //
 
-#ifndef PROJECT_EXPRESSION_H
-#define PROJECT_EXPRESSION_H
+#ifndef ADVANCED1_HW3_EXPRESSION_H
+#define ADVANCED1_HW3_EXPRESSION_H
 
 /**
  * Expression Interface
@@ -14,4 +14,4 @@ public:
     virtual ~Expression() = default;
 };
 
-#endif //PROJECT_EXPRESSION_H
+#endif //ADVANCED1_HW3_EXPRESSION_H

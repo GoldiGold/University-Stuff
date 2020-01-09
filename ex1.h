@@ -2,8 +2,8 @@
 // Created by yoavst22 on 09/11/2019.
 //
 
-#ifndef EX1_EX1_H
-#define EX1_EX1_H
+#ifndef ADVANCED1_HW3_EX1_H
+#define ADVANCED1_HW3_EX1_H
 
 #include <iostream>
 #include <string>
@@ -136,4 +136,4 @@ class Interpreter {
   std::string firstPart(std::string &str);
 };
 
-#endif //EX1_EX1_H
+#endif //ADVANCED1_HW3_EX1_H

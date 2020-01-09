@@ -11,8 +11,8 @@ class ProgVar {
  public:
   ProgVar(double val, std::string simulator);
   virtual ~ProgVar() {}
-  const std::string &GetSim() const {return sim;}
-  double GetValue() const {return value;}
+   std::string &GetSim()  {return sim;}
+  double GetValue()  {return value;}
   void SetValue(double value) {ProgVar::value = value;}
   void SetSim(const std::string &sim) {ProgVar::sim = sim;}
 };

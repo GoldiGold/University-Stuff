@@ -6,7 +6,6 @@
 #define ADVANCED1_HW3__DEFINEVARRIGHTCOMMAND_H_
 #include "Command.h"
 #include "SingletonObj.h"
-#include "SymbolTable.h"
 class DefineVarRightCommand: public Command {
 	std::string name;
 	std::string sim;
