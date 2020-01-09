@@ -13,24 +13,24 @@
 class ConnectClientCommand : public Command {
  protected:
 	struct sockaddr_in serv_addr;
-	const char *ipAddress;
+	char *ipAddress;
 	int port;
 	int sockfd;
 
  public:
-	ConnectClientCommand(const char *ipAddress, std::string exp);
+	ConnectClientCommand(const char *ipAddress, std::string exp, int n);
 
 	virtual ~ConnectClientCommand();
 
 //	int connectToServer();
 	sockaddr_in *GetServAddr();
-	void SetServAddr(sockaddr_in serv_addr);
+//	void SetServAddr(sockaddr_in serv_addr);
 	const char *GetIpAddress();
-	void SetIpAddress(const char *ip_address);
+	//void SetIpAddress(const char *ip_address);
 	int GetPort();
 	void SetPort(int port);
 	int GetSockfd();
-	void SetSockfd(int sockfd);
+//	void SetSockfd(int sockfd);
 	int execute(std::string var) override; // SENDING THE MESSAGE
 
 	int updateVarInSimulator();

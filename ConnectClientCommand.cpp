@@ -4,8 +4,13 @@
 
 #include "ConnectClientCommand.h"
 
-ConnectClientCommand::ConnectClientCommand(const char *ipAddress, std::string exp) {
-	this->ipAddress = ipAddress;
+ConnectClientCommand::ConnectClientCommand(const char *ipAddress, std::string exp, int n) {
+	this->ipAddress = (char*)std::malloc(n+1);
+	int i =0;
+	for(; i < n; i++) {
+		this->ipAddress[i] = ipAddress[i];
+	}
+	this->ipAddress[i] = '\0';
 	std::lock_guard<std::mutex> lk(SingletonObj::getInstance()->interpreter_mutex);
 	this->port = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
 }
@@ -15,7 +20,7 @@ ConnectClientCommand::~ConnectClientCommand() = default;
 int connectToServer(ConnectClientCommand *connect_client_command) {
 	//TODO: DONT CONNECT UNTIL YOU CREATED A SERVER.
 
-
+	std::cout << connect_client_command->GetIpAddress() << std::endl << connect_client_command->GetPort();
 	while (!SingletonObj::getInstance()->IsGlobalHasServerOpened()) {
 		// do nothing - just wait for us to connect to the simulator as a server (the sim is the client) and then
 		// connect as a client
@@ -23,10 +28,13 @@ int connectToServer(ConnectClientCommand *connect_client_command) {
 	int is_connect = connect(connect_client_command->GetSockfd(),
 							 (struct sockaddr *) (connect_client_command->GetServAddr()),
 							 sizeof(*(connect_client_command->GetServAddr())));
+	std::cout<<connect_client_command->GetSockfd() << std::endl;
 	if (is_connect < 0) {
 		std::cerr << "\ncould not connect to host server\n" << std::endl;
 		return -2;
 	}
+
+	SingletonObj::getInstance()->SetHaveConnectedAsClient(true);
 
 	while (!SingletonObj::getInstance()->IsShouldStopClientThread()) {
 		connect_client_command->updateVarInSimulator();
@@ -81,15 +89,13 @@ int ConnectClientCommand::execute(std::string var) {
 sockaddr_in *ConnectClientCommand::GetServAddr() {
 	return &serv_addr;
 }
-void ConnectClientCommand::SetServAddr(sockaddr_in serv_addr) {
-	ConnectClientCommand::serv_addr = serv_addr;
-}
+//void ConnectClientCommand::SetServAddr(sockaddr_in serv_addr) {
+//	ConnectClientCommand::serv_addr = serv_addr;
+//}
 const char *ConnectClientCommand::GetIpAddress() {
 	return ipAddress;
 }
-void ConnectClientCommand::SetIpAddress(const char *ip_address) {
-	ipAddress = ip_address;
-}
+
 int ConnectClientCommand::GetPort() {
 	return port;
 }
@@ -99,7 +105,7 @@ void ConnectClientCommand::SetPort(int port) {
 int ConnectClientCommand::GetSockfd() {
 	return sockfd;
 }
-void ConnectClientCommand::SetSockfd(int sockfd) {
-	ConnectClientCommand::sockfd = sockfd;
-}
+//void ConnectClientCommand::SetSockfd(int sockfd) {
+//	ConnectClientCommand::sockfd = sockfd;
+//}
 //TODO: NEED TO HAVE A "SEND" FUNCTION - IN THE MAIN PROBABLY, TO SEND THE MESSAGES WITH THE CLIENT.
