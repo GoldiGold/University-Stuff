@@ -7,6 +7,7 @@
 ConnectClientCommand::ConnectClientCommand(const char *ipAddress, std::string exp) {
 	this->ipAddress = ipAddress;
 	this->port = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
+
 }
 
 ConnectClientCommand::~ConnectClientCommand() = default;
@@ -21,13 +22,13 @@ int connectToServer(ConnectClientCommand *connect_client_command) {
 	}
 	int is_connect = connect(connect_client_command->GetSockfd(),
 							 (struct sockaddr *) (connect_client_command->GetServAddr()),
-							 sizeof(connect_client_command->GetServAddr()));
+							 sizeof(*(connect_client_command->GetServAddr())));
 	if (is_connect < 0) {
 		std::cerr << "\ncould not connect to host server\n" << std::endl;
 		return -2;
 	}
 
-	while (!SingletonObj::getInstance()->IsShouldStopClientThread()){
+	while (!SingletonObj::getInstance()->IsShouldStopClientThread()) {
 		connect_client_command->updateVarInSimulator();
 		// WAITING SO WE WILL NOT ENTER SO MANY FUNCTIONS ALL THE TIME.
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -48,6 +49,7 @@ int ConnectClientCommand::updateVarInSimulator(/*std::string varName, int newVar
 			+ std::to_string(single->GetMessagesQueue()->front().second) + "\r\n";
 		single->GetMessagesQueue()->pop();
 		return_val = write(this->sockfd, message.c_str(), message.length());
+		std::cout << "the message:" << message << std::endl;
 		return return_val; // A message was sent.
 	}
 	return -1; // No message was sent
@@ -62,9 +64,9 @@ int ConnectClientCommand::execute(std::string var) {
 		return -1;
 	}
 
-	this->serv_addr->sin_family = AF_INET;
-	this->serv_addr->sin_addr.s_addr = inet_addr(ipAddress);
-	this->serv_addr->sin_port = htons(this->port);
+	this->serv_addr.sin_family = AF_INET;
+	this->serv_addr.sin_addr.s_addr = inet_addr(ipAddress);
+	this->serv_addr.sin_port = htons(this->port);
 
 
 //	TODO: CREATE THE THREAD AND START SENDING STUFF ( OFR SOMEHOW, TALK TO MILO)
@@ -73,11 +75,10 @@ int ConnectClientCommand::execute(std::string var) {
 	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
-
 sockaddr_in *ConnectClientCommand::GetServAddr() {
-	return serv_addr;
+	return &serv_addr;
 }
-void ConnectClientCommand::SetServAddr(sockaddr_in *serv_addr) {
+void ConnectClientCommand::SetServAddr(sockaddr_in serv_addr) {
 	ConnectClientCommand::serv_addr = serv_addr;
 }
 const char *ConnectClientCommand::GetIpAddress() {

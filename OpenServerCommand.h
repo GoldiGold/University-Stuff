@@ -8,10 +8,12 @@
 #include "Command.h"
 #include <thread>
 #include "SingletonObj.h"
+#include <sstream>
+
 
 class OpenServerCommand : public Command {
  protected:
-	struct sockaddr_in *serv_addr;
+	struct sockaddr_in serv_addr;
 	int port;
 	int sockfd;
 
@@ -21,7 +23,7 @@ class OpenServerCommand : public Command {
 	virtual ~OpenServerCommand();
 
 	sockaddr_in *GetServAddr() ;
-	void SetServAddr(sockaddr_in *serv_addr);
+	void SetServAddr(sockaddr_in serv_addr);
 	int GetPort() ;
 	void SetPort(int port);
 	int GetSockfd() ;

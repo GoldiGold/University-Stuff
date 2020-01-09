@@ -23,6 +23,7 @@ class ServerSymbolTable {
 
 	void updateAtSymbolTable(std::string path, double value, SymbolTable* symbol_table);
 
+	std::map<std::string, std::list<std::string> *> *GetM() const;
 //	double getVal(std::string name);
 //
 //	std::string getSim(std::string name);

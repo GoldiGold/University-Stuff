@@ -12,7 +12,7 @@
 
 class ConnectClientCommand : public Command {
  protected:
-	struct sockaddr_in *serv_addr;
+	struct sockaddr_in serv_addr;
 	const char *ipAddress;
 	int port;
 	int sockfd;
@@ -24,7 +24,7 @@ class ConnectClientCommand : public Command {
 
 //	int connectToServer();
 	sockaddr_in *GetServAddr();
-	void SetServAddr(sockaddr_in *serv_addr);
+	void SetServAddr(sockaddr_in serv_addr);
 	const char *GetIpAddress();
 	void SetIpAddress(const char *ip_address);
 	int GetPort();

@@ -7,6 +7,43 @@
 ServerSymbolTable::ServerSymbolTable() {
 	this->m = new std::map<std::string, std::list<std::string> *>();
 	// INITIALIZING THE 36 KEYS - PATHS, OF THE SERVER SYMBOL TABLE.
+	this->add("/instrumentation/airspeed-indicator/indicated-speed-kt", "");
+	this->add("/sim/time/warp", "");
+	this->add("/controls/switches/magnetos", "");
+	this->add("/instrumentation/heading-indicator/offset-deg", "");
+	this->add("/instrumentation/altimeter/indicated-altitude-ft", "");
+	this->add("/instrumentation/altimeter/pressure-alt-ft", "");
+	this->add("/instrumentation/attitude-indicator/indicated-pitch-deg", "");
+	this->add("/instrumentation/attitude-indicator/indicated-roll-deg", "");
+	this->add("/instrumentation/attitude-indicator/internal-pitch-deg", "");
+	this->add("/instrumentation/attitude-indicator/internal-roll-deg", "");
+	this->add("/instrumentation/encoder/indicated-altitude-ft", "");
+	this->add("/instrumentation/encoder/pressure-alt-ft", "");
+	this->add("/instrumentation/gps/indicated-altitude-ft", "");
+	this->add("/instrumentation/gps/indicated-ground-speed-kt", "");
+	this->add("/instrumentation/gps/indicated-vertical-speed", "");
+	this->add("/instrumentation/heading-indicator/indicated-heading-deg", "");
+	this->add("/instrumentation/magnetic-compass/indicated-heading-deg", "");
+	this->add("/instrumentation/slip-skid-ball/indicated-slip-skid", "");
+	this->add("/instrumentation/turn-indicator/indicated-turn-rate", "");
+	this->add("/instrumentation/vertical-speed-indicator/indicated-speed-fpm", "");
+	this->add("/controls/flight/aileron", "");
+	this->add("/controls/flight/elevator", "");
+	this->add("/controls/flight/rudder", "");
+	this->add("/controls/flight/flaps", "");
+	this->add("/controls/engines/engine/throttle", "");
+	this->add("/controls/engines/current-engine/throttle", "");
+	this->add("/controls/switches/master-avionics", "");
+	this->add("/controls/switches/starter", "");
+	this->add("/engines/active-engine/auto-start", "");
+	this->add("/controls/flight/speedbrake", "");
+	this->add("/sim/model/c172p/brake-parking", "");
+	this->add("/controls/engines/engine/primer", "");
+	this->add("/controls/engines/current-engine/mixture", "");
+	this->add("/controls/switches/master-bat", "");
+	this->add("/controls/switches/master-alt", "");
+	this->add("/engines/engine/rpm", "");
+
 
 }
 ServerSymbolTable::~ServerSymbolTable() {
@@ -80,6 +117,9 @@ void ServerSymbolTable::updateAtSymbolTable(std::string path, double value, Symb
 			}
 		}
 	}
+}
+std::map<std::string, std::list<std::string> *> *ServerSymbolTable::GetM() const {
+	return m;
 }
 
 
