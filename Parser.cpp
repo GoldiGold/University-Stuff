@@ -104,4 +104,7 @@ void Parser::execute(){
   for(Command* com: *commands){
     com->execute("");
   }
+  SingletonObj::getInstance()->SetShouldStopServerThread(true);
+	SingletonObj::getInstance()->SetShouldStopClientThread(true);
+	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 }
