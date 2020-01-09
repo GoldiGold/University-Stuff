@@ -14,6 +14,8 @@ ConnectClientCommand::~ConnectClientCommand() = default;
 
 int connectToServer(ConnectClientCommand *connect_client_command) {
 	//TODO: DONT CONNECT UNTIL YOU CREATED A SERVER.
+
+
 	while (!SingletonObj::getInstance()->IsGlobalHasServerOpened()) {
 		// do nothing - just wait for us to connect to the simulator as a server (the sim is the client) and then
 		// connect as a client
@@ -45,7 +47,7 @@ int ConnectClientCommand::updateVarInSimulator(/*std::string varName, int newVar
 	SingletonObj *single = SingletonObj::getInstance();
 	std::lock_guard<std::mutex> lk(SingletonObj::getInstance()->message_queue_mutex);
 	if (!single->GetMessagesQueue()->empty()) {
-		std::lock_guard<std::mutex> lk(SingletonObj::getInstance()->symbol_table_mutex);
+		std::lock_guard<std::mutex> lk2(SingletonObj::getInstance()->symbol_table_mutex);
 		message = "set " + single->GetSymbolTable()->getSim(single->GetMessagesQueue()->front().first) + " "
 			+ std::to_string(single->GetMessagesQueue()->front().second) + "\r\n";
 		single->GetMessagesQueue()->pop();
