@@ -6,15 +6,13 @@
 
 ConnectClientCommand::ConnectClientCommand(const char *ipAddress, std::string exp) {
 	this->ipAddress = ipAddress;
+	std::lock_guard<std::mutex> lk(SingletonObj::getInstance()->interpreter_mutex);
 	this->port = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
-
 }
 
 ConnectClientCommand::~ConnectClientCommand() = default;
 
 int connectToServer(ConnectClientCommand *connect_client_command) {
-	//אני צריך לעשות שעד שאני פותח שרת שמקבל את הסימולטור כלקוח אני לא פותח את הלקוח שלי?
-	// אז אני יכול לעשות משתנה גלובאלי
 	//TODO: DONT CONNECT UNTIL YOU CREATED A SERVER.
 	while (!SingletonObj::getInstance()->IsGlobalHasServerOpened()) {
 		// do nothing - just wait for us to connect to the simulator as a server (the sim is the client) and then
@@ -36,7 +34,8 @@ int connectToServer(ConnectClientCommand *connect_client_command) {
 	/**
 	 * WE MIGHT RETURN THE NEW_SOCKET AND THEN READ FROM ITS ADDRESS.
 	 */
-	return connect_client_command->GetSockfd(); // so we will know where to send messages NOT REALLY NEEDED SINCE THE SEND/WRITE FUNCTION IS OF THE CLASS.
+	close(connect_client_command->GetSockfd());
+	return 1; // so we will know where to send messages NOT REALLY NEEDED SINCE THE SEND/WRITE FUNCTION IS OF THE CLASS.
 }
 
 int ConnectClientCommand::updateVarInSimulator(/*std::string varName, int newVarValue, SymbolTable *sm*/) {
@@ -44,7 +43,9 @@ int ConnectClientCommand::updateVarInSimulator(/*std::string varName, int newVar
 	std::string message;
 	ssize_t return_val;
 	SingletonObj *single = SingletonObj::getInstance();
+	std::lock_guard<std::mutex> lk(SingletonObj::getInstance()->message_queue_mutex);
 	if (!single->GetMessagesQueue()->empty()) {
+		std::lock_guard<std::mutex> lk(SingletonObj::getInstance()->symbol_table_mutex);
 		message = "set " + single->GetSymbolTable()->getSim(single->GetMessagesQueue()->front().first) + " "
 			+ std::to_string(single->GetMessagesQueue()->front().second) + "\r\n";
 		single->GetMessagesQueue()->pop();

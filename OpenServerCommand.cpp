@@ -5,7 +5,9 @@
 #include "OpenServerCommand.h"
 
 OpenServerCommand::OpenServerCommand(std::string exp) {
+	SingletonObj::getInstance()->interpreter_mutex.lock();
 	this->port = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
+	SingletonObj::getInstance()->interpreter_mutex.unlock();
 }
 
 OpenServerCommand::~OpenServerCommand() = default;
@@ -58,15 +60,23 @@ int acceptClient(OpenServerCommand *open_server_command) {
 		std::string t = buffer;
 		std::vector<std::string> values = split(t, ',');
 		int counter = 0;
+		SingletonObj::getInstance()->server_symbol_table_mutex.lock();
+		SingletonObj::getInstance()->symbol_table_mutex.lock();
 		for (auto const &iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetM()) {
+
 			SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator.first,
 																					 stod(values[counter]),
 																					 SingletonObj::getInstance()->GetSymbolTable());
 			++counter;
-			std::cout << "A message has been received" << std::endl;
+			std::cout << "A message has been recieved" << std::endl;
 		}
+		SingletonObj::getInstance()->symbol_table_mutex.unlock();
+		SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
+
 	}
-	return new_socket; //so we will have the new socket we listen to.
+	close(new_socket);
+	close(open_server_command->GetSockfd());
+	return 1; //so we will have the new socket we listen to.
 }
 
 int OpenServerCommand::execute(std::string var) {

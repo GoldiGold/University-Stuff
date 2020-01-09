@@ -3,7 +3,12 @@
 //
 
 #include "DefineVarEqCommand.h"
-int DefineVarEqCommand::execute(std::string var){
-  double val = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
-  SingletonObj::getInstance()->GetSymbolTable()->add(name, val, "");
+int DefineVarEqCommand::execute(std::string var) {
+	SingletonObj::getInstance()->interpreter_mutex.lock();
+	double val = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
+	SingletonObj::getInstance()->interpreter_mutex.unlock();
+
+	SingletonObj::getInstance()->symbol_table_mutex.lock();
+	SingletonObj::getInstance()->GetSymbolTable()->add(name, val, "");
+	SingletonObj::getInstance()->symbol_table_mutex.unlock();
 }
