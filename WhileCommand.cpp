@@ -7,10 +7,10 @@ WhileCommand::WhileCommand(std::string exp1, std::string oper, std::string exp2)
   con = new Condition(exp1, oper, exp2);
   commands = new std::list<Command*>();
 }
-int WhileCommand::execute(std::string var){
+void WhileCommand::execute(){
   while(con->isTrue()) {
     for(Command* c: *commands) {
-      c->execute("");
+      c->execute();
     }
   }
 }

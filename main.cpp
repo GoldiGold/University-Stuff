@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 	auto lex = 	new Lexer();
 //	cout << "work2" << endl;
 
-	auto l = lex->lexer(argv[1]);
+	auto l = lex->lexer(argv[argc - 1]);
 //	cout << "work3" << endl;
 
 	Parser *par = new Parser(l);

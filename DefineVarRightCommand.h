@@ -13,7 +13,7 @@ class DefineVarRightCommand: public Command {
 
  public:
 	DefineVarRightCommand(std::string varName, std::string simulator);
-	int execute(std::string var);
+	void execute();
 	virtual ~DefineVarRightCommand() {}
 };
 #endif //ADVANCED1_HW3__DEFINEVARRIGHTCOMMAND_H_

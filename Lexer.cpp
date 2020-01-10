@@ -5,7 +5,7 @@
 //this function delete the spaces in the string, unless the space is in " "
 std::string Lexer::delete_spaces(std::string str) {
 	int isQuote = 0; //are we inside a ""
-	for (int i = 0; i < str.length(); i++) {
+	for (unsigned int i = 0; i < str.length(); i++) {
 		if (str[i] == '"') {
 			if (isQuote == 0) {
 				isQuote = 1;
@@ -26,32 +26,33 @@ std::string Lexer::delete_spaces(std::string str) {
 
 
 void Lexer::lexCondition(std::list<std::string> * lst, std::string str){
-  if (str.find("==")!=-1) {
+
+  if (signed(str.find("=="))!=-1) {
     lst->push_back(delete_spaces(str.substr(0, str.find("=="))));
     lst->push_back("==");
     str = str.substr(str.find("==")+2, str.length());
     lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
-  } else if (str.find("<=")!=-1) {
+  } else if (signed(str.find("<="))!=-1) {
     lst->push_back(delete_spaces(str.substr(0, str.find("<="))));
     lst->push_back("<=");
     str = str.substr(str.find("<=")+2, str.length());
     lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
-  } else if (str.find(">=")!=-1) {
+  } else if (signed(str.find(">="))!=-1) {
     lst->push_back(delete_spaces(str.substr(0, str.find(">="))));
     lst->push_back(">=");
     str = str.substr(str.find(">=")+2, str.length());
     lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
-  } else if (str.find("!=")!=-1) {
+  } else if (signed(str.find("!="))!=-1) {
     lst->push_back(delete_spaces(str.substr(0, str.find("!="))));
     lst->push_back("!=");
     str = str.substr(str.find("!=")+2, str.length());
     lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
-  } else if (str.find("<")!=-1) {
+  } else if (signed(str.find("<"))!=-1) {
     lst->push_back(delete_spaces(str.substr(0, str.find("<"))));
     lst->push_back("<");
     str = str.substr(str.find("<")+1, str.length());
     lst->push_back(delete_spaces(str.substr(0, str.length()-1)));
-  } else if (str.find(">")!=-1) {
+  } else if (signed(str.find(">"))!=-1) {
     lst->push_back(delete_spaces(str.substr(0, str.find(">"))));
     lst->push_back(">");
     str = str.substr(str.find(">")+1, str.length());
@@ -147,7 +148,7 @@ std::list<std::string> *Lexer::lexer(std::string file_name) {
 				lst->push_back(str.substr(0, 2));
 				str = str.substr(2, (str.length() - 2));
 				continue;
-			} else if (str.find("=")!=-1) {
+			} else if (signed(str.find("="))!=-1) {
               lst->push_back(delete_spaces(str.substr(0, str.find("="))));
               str = str.substr(str.find("="), str.length());
               continue;

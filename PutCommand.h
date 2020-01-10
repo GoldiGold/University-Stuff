@@ -13,7 +13,7 @@ class PutCommand: public Command {
 
  public:
   PutCommand(std::string name1, std::string exp1){name = name1; exp = exp1;}
-  int execute(std::string var);
+  void execute();
   virtual ~PutCommand() {}
 };
 #endif //ADVANCED1_HW3__PUTCOMMAND_H_

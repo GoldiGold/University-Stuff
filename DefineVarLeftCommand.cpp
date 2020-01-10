@@ -9,7 +9,7 @@ DefineVarLeftCommand::DefineVarLeftCommand(std::string varName, std::string simu
 //	std::cout << "define var left path: " << sim << std::endl;
 
 }
-int DefineVarLeftCommand::execute(std::string var) {
+void DefineVarLeftCommand::execute() {
 	SingletonObj::getInstance()->symbol_table_mutex.lock();
 	SingletonObj::getInstance()->GetSymbolTable()->add(name, 0, "");
 	SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -17,5 +17,4 @@ int DefineVarLeftCommand::execute(std::string var) {
 	SingletonObj::getInstance()->server_symbol_table_mutex.lock();
 	SingletonObj::getInstance()->GetServerSymbolTable()->add(sim, name);
 	SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
-	return 0;
 }

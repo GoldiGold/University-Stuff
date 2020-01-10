@@ -1,0 +1,11 @@
+var x= 0
+var y = 5
+if y <6{
+    x= 2
+}
+while x<10{
+    Print( x)
+    x =x +1
+    Sleep(500)
+    }
+Print( "it is done" )

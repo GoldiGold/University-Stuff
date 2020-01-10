@@ -110,7 +110,7 @@ void Parser::execute() {
 		// if the command is a Connect Client Command, then we wait for an established connection.
 //		std::cout << "is: " << (typeid(*com) == typeid(ConnectClientCommand)) << std::endl;
 		if (typeid(*com) == typeid(ConnectClientCommand)) {
-			com->execute("");
+			com->execute();
 //			std::cout << "finished creating client VVVVVV" << std::endl;
 
 			while (!SingletonObj::getInstance()->IsHaveConnectedAsClient()) {
@@ -119,7 +119,7 @@ void Parser::execute() {
 
 //			std::cout << "finished creating client" << std::endl;
 		} else {
-			com->execute("");
+			com->execute();
 		}
 	}
 	SingletonObj::getInstance()->SetShouldStopServerThread(true);

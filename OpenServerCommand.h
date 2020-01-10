@@ -30,7 +30,7 @@ class OpenServerCommand : public Command {
 	void SetSockfd(int sockfd);
 //	int acceptClient();
 
-	int execute(std::string var) override; // SENDING THE MESSAGE
+	void execute() override; // SENDING THE MESSAGE
 
 
 };

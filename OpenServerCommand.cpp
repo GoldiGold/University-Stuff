@@ -93,7 +93,7 @@ int acceptClient(OpenServerCommand *open_server_command) {
 				}
 				SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 				SingletonObj::getInstance()->symbol_table_mutex.unlock();
-				for (int kI = 1; kI < temp_sub_n.size(); ++kI) {
+				for (int kI = 1; kI < signed(temp_sub_n.size()); ++kI) {
 					values = split(temp_sub_n[kI], ',');
 					counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
@@ -121,7 +121,7 @@ int acceptClient(OpenServerCommand *open_server_command) {
 //				std::cout << "there is no need to complete" << std::endl;
 				sub_n = split(t, '\n');
 //				std::cout << "created sub_n" << std::endl;
-				for (int kI = 0; kI < sub_n.size(); ++kI) {
+				for (int kI = 0; kI < signed(sub_n.size()); ++kI) {
 					values = split(sub_n[kI], ',');
 //					std::cout << "created the values" << std::endl;
 					int counter = 0;
@@ -180,7 +180,7 @@ int acceptClient(OpenServerCommand *open_server_command) {
 				}
 				SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 				SingletonObj::getInstance()->symbol_table_mutex.unlock();
-				for (int kI = 1; kI < temp_sub_n.size() - 1; ++kI) {
+				for (int kI = 1; kI < signed(temp_sub_n.size() - 1); ++kI) {
 					values = split(temp_sub_n[kI], ',');
 					counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
@@ -235,7 +235,7 @@ int acceptClient(OpenServerCommand *open_server_command) {
 			} else {
 //				std::cout << "there is no need to complete" << std::endl;
 				sub_n = split(t, '\n');
-				for (int kI = 0; kI < sub_n.size() - 1; ++kI) {
+				for (int kI = 0; kI < signed(sub_n.size() - 1); ++kI) {
 					values = split(sub_n[kI], ',');
 					int counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
@@ -319,13 +319,12 @@ int acceptClient(OpenServerCommand *open_server_command) {
 	return 1; //so we will have the new socket we listen to.
 }
 
-int OpenServerCommand::execute(std::string var) {
+void OpenServerCommand::execute() {
 	//TODO: CHECK IF THE SOCKET OPENING IS A BLOCKING FUNCTION - NEEDS TO OPEN A THREAD TO IT OTHERWISE IT WILL STUCK
 	//TODO: THE WHOLE PROGRAM
 	this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
 		std::cerr << "\n Socket creation error \n" << std::endl;
-		return -1;
 	}
 
 	this->serv_addr.sin_family = AF_INET;
@@ -337,24 +336,23 @@ int OpenServerCommand::execute(std::string var) {
 //	TODO: CREATE THE THREAD AND START RECEIVING STUFF ( OR SOMEHOW, TALK TO MILO)
 	std::thread openServer(acceptClient, this);
 	openServer.detach();
-	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
 sockaddr_in *OpenServerCommand::GetServAddr() {
 	return &serv_addr;
 }
-void OpenServerCommand::SetServAddr(sockaddr_in serv_addr) {
-	OpenServerCommand::serv_addr = serv_addr;
+void OpenServerCommand::SetServAddr(sockaddr_in serv_addr1) {
+	OpenServerCommand::serv_addr = serv_addr1;
 }
 int OpenServerCommand::GetPort() {
 	return port;
 }
-void OpenServerCommand::SetPort(int port) {
-	OpenServerCommand::port = port;
+void OpenServerCommand::SetPort(int port1) {
+	OpenServerCommand::port = port1;
 }
 int OpenServerCommand::GetSockfd() {
 	return sockfd;
 }
-void OpenServerCommand::SetSockfd(int sockfd) {
-	OpenServerCommand::sockfd = sockfd;
+void OpenServerCommand::SetSockfd(int sockfd1) {
+	OpenServerCommand::sockfd = sockfd1;
 }

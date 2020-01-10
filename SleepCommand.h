@@ -14,7 +14,7 @@ class SleepCommand: public Command {
 
  public:
   SleepCommand(std::string exp1){exp = exp1;}
-  int execute(std::string var);
+  void execute();
   virtual ~SleepCommand() {}
 };
 #endif //ADVANCED1_HW3__SLEEPCOMMAND_H_

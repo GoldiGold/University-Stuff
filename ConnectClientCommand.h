@@ -20,7 +20,9 @@ class ConnectClientCommand : public Command {
  public:
 	ConnectClientCommand(const char *ipAddress, std::string exp, int n);
 
-	virtual ~ConnectClientCommand();
+	virtual ~ConnectClientCommand(){
+
+	}
 
 //	int connectToServer();
 	sockaddr_in *GetServAddr();
@@ -31,7 +33,7 @@ class ConnectClientCommand : public Command {
 	void SetPort(int port);
 	int GetSockfd();
 //	void SetSockfd(int sockfd);
-	int execute(std::string var) override; // SENDING THE MESSAGE
+	void execute() override; // SENDING THE MESSAGE
 
 	int updateVarInSimulator();
 

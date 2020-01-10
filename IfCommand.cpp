@@ -7,10 +7,10 @@ IfCommand::IfCommand(std::string exp1, std::string oper, std::string exp2){
   con = new Condition(exp1, oper, exp2);
   commands = new std::list<Command*>();
 }
-int IfCommand::execute(std::string var){
+void IfCommand::execute(){
   if(con->isTrue()) {
     for(Command* c: *commands) {
-      c->execute("");
+      c->execute();
     }
   }
 }

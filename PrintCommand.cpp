@@ -3,7 +3,7 @@
 //
 
 #include "PrintCommand.h"
-int PrintCommand::execute(std::string var) {
+void PrintCommand::execute() {
 	if (exp[0] == '"' && exp[exp.length() - 1] == '"') {
 		std::cout << exp.substr(1, exp.length() - 2) << std::endl;
 	} else {
@@ -14,9 +14,8 @@ int PrintCommand::execute(std::string var) {
 			val = SingletonObj::getInstance()->GetSymbolTable()->getMap()->at(exp)->GetValue();
 			SingletonObj::getInstance()->symbol_table_mutex.unlock();
 //			if ((exp.compare("rpm"))) {
-				std::cout << val << std::endl;
+//				std::cout << val << std::endl;
 //			}
-			return 1;
 		}
 		// if hasn't entered the if:
 		SingletonObj::getInstance()->symbol_table_mutex.unlock();

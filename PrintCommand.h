@@ -12,7 +12,7 @@ class PrintCommand: public Command {
 
  public:
   PrintCommand(std::string exp1){exp = exp1;}
-  int execute(std::string var);
+  void execute();
   virtual ~PrintCommand() {}
 };
 #endif //ADVANCED1_HW3__PRINTCOMMAND_H_

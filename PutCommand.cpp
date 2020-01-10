@@ -3,7 +3,7 @@
 //
 
 #include "PutCommand.h"
-int PutCommand::execute(std::string var) {
+void PutCommand::execute() {
 	SingletonObj::getInstance()->interpreter_mutex.lock();
 	double val = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
 	SingletonObj::getInstance()->interpreter_mutex.unlock();

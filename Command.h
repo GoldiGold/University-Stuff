@@ -16,9 +16,8 @@
 
 class Command {
  public:
-	virtual int execute(std::string var) = 0;
-	virtual ~Command() {}
-
+	virtual void execute()=0;
+	virtual ~Command(){}
 };
 
 #endif //ADVANCED1_HW3__COMMAND_H_

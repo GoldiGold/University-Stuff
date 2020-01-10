@@ -15,7 +15,7 @@ class DefineVarEqCommand: public Command {
 
  public:
 	DefineVarEqCommand(std::string varName, std::string exp1){name = varName; exp=exp1;}
-	int execute(std::string var);
+	void execute();
 	virtual ~DefineVarEqCommand() {}
 };
 #endif //ADVANCED1_HW3__DEFINEVAREQCOMMAND_H_

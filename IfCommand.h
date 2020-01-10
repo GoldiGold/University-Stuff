@@ -14,7 +14,7 @@ class IfCommand: public Command {
 
  public:
   IfCommand(std::string exp1, std::string oper, std::string exp2);
-  int execute(std::string var);
+  void execute();
   void addCommand(Command* com) {commands->push_back(com);}
   virtual ~IfCommand() {delete con; delete commands;}
 };

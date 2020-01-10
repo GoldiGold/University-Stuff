@@ -4,18 +4,18 @@
 
 #include "ConnectClientCommand.h"
 
-ConnectClientCommand::ConnectClientCommand(const char *ipAddress, std::string exp, int n) {
+ConnectClientCommand::ConnectClientCommand(const char *ipAddress1, std::string exp, int n) {
 	this->ipAddress = (char*)std::malloc(n+1);
 	int i =0;
 	for(; i < n; i++) {
-		this->ipAddress[i] = ipAddress[i];
+		this->ipAddress[i] = ipAddress1[i];
 	}
 	this->ipAddress[i] = '\0';
 	std::lock_guard<std::mutex> lk(SingletonObj::getInstance()->interpreter_mutex);
 	this->port = SingletonObj::getInstance()->GetInter()->interpret(exp)->calculate();
 }
 
-ConnectClientCommand::~ConnectClientCommand() = default;
+//ConnectClientCommand::~ConnectClientCommand() = default;
 
 int connectToServer(ConnectClientCommand *connect_client_command) {
 	//TODO: DONT CONNECT UNTIL YOU CREATED A SERVER.
@@ -66,13 +66,12 @@ int ConnectClientCommand::updateVarInSimulator(/*std::string varName, int newVar
 	return -1; // No message was sent
 }
 
-int ConnectClientCommand::execute(std::string var) {
+void ConnectClientCommand::execute() {
 	//TODO: CHECK IF THE SOCKET OPENING IS A BLOCKING FUNCTION - NEEDS TO OPEN A THREAD TO IT OTHERWISE IT WILL STUCK
 	//TODO: THE WHOLE PROGRAM
 	this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
 		std::cerr << "\n Socket creation error \n" << std::endl;
-		return -1;
 	}
 
 	this->serv_addr.sin_family = AF_INET;
@@ -83,7 +82,6 @@ int ConnectClientCommand::execute(std::string var) {
 //	TODO: CREATE THE THREAD AND START SENDING STUFF ( OFR SOMEHOW, TALK TO MILO)
 	std::thread connectClient(connectToServer, this);
 	connectClient.detach();
-	return 2; // THE AMOUNT OF SKIPS NEEDED TO BE DONE IN THE PARSER ARRAY
 }
 
 sockaddr_in *ConnectClientCommand::GetServAddr() {
@@ -99,8 +97,8 @@ const char *ConnectClientCommand::GetIpAddress() {
 int ConnectClientCommand::GetPort() {
 	return port;
 }
-void ConnectClientCommand::SetPort(int port) {
-	ConnectClientCommand::port = port;
+void ConnectClientCommand::SetPort(int port1) {
+	ConnectClientCommand::port = port1;
 }
 int ConnectClientCommand::GetSockfd() {
 	return sockfd;
