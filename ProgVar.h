@@ -13,7 +13,7 @@ class ProgVar {
   virtual ~ProgVar() {}
    std::string &GetSim()  {return sim;}
   double GetValue()  {return value;}
-  void SetValue(double value) {ProgVar::value = value;}
+  void SetValue(double value) {this->value = value;}
   void SetSim(const std::string &sim) {ProgVar::sim = sim;}
 };
 #endif //ADVANCED1_HW3__PROGVAR_H_

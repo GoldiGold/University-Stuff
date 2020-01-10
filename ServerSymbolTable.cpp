@@ -5,7 +5,7 @@
 #include "ServerSymbolTable.h"
 
 ServerSymbolTable::ServerSymbolTable() {
-	this->m = new std::map<std::string, std::list<std::string> *>();
+	this->m = new std::unordered_map<std::string, std::list<std::string> *>();
 	// INITIALIZING THE 36 KEYS - PATHS, OF THE SERVER SYMBOL TABLE.
 	this->add("/instrumentation/airspeed-indicator/indicated-speed-kt", "");
 	this->add("/sim/time/warp", "");
@@ -43,6 +43,43 @@ ServerSymbolTable::ServerSymbolTable() {
 	this->add("/controls/switches/master-bat", "");
 	this->add("/controls/switches/master-alt", "");
 	this->add("/engines/engine/rpm", "");
+	this->insertion_order = new std::vector<std::string>;
+	this->insertion_order->push_back("/instrumentation/airspeed-indicator/indicated-speed-kt");
+	this->insertion_order->push_back("/sim/time/warp");
+	this->insertion_order->push_back("/controls/switches/magnetos");
+	this->insertion_order->push_back("/instrumentation/heading-indicator/offset-deg");
+	this->insertion_order->push_back("/instrumentation/altimeter/indicated-altitude-ft");
+	this->insertion_order->push_back("/instrumentation/altimeter/pressure-alt-ft");
+	this->insertion_order->push_back("/instrumentation/attitude-indicator/indicated-pitch-deg");
+	this->insertion_order->push_back("/instrumentation/attitude-indicator/indicated-roll-deg");
+	this->insertion_order->push_back("/instrumentation/attitude-indicator/internal-pitch-deg");
+	this->insertion_order->push_back("/instrumentation/attitude-indicator/internal-roll-deg");
+	this->insertion_order->push_back("/instrumentation/encoder/indicated-altitude-ft");
+	this->insertion_order->push_back("/instrumentation/encoder/pressure-alt-ft");
+	this->insertion_order->push_back("/instrumentation/gps/indicated-altitude-ft");
+	this->insertion_order->push_back("/instrumentation/gps/indicated-ground-speed-kt");
+	this->insertion_order->push_back("/instrumentation/gps/indicated-vertical-speed");
+	this->insertion_order->push_back("/instrumentation/heading-indicator/indicated-heading-deg");
+	this->insertion_order->push_back("/instrumentation/magnetic-compass/indicated-heading-deg");
+	this->insertion_order->push_back("/instrumentation/slip-skid-ball/indicated-slip-skid");
+	this->insertion_order->push_back("/instrumentation/turn-indicator/indicated-turn-rate");
+	this->insertion_order->push_back("/instrumentation/vertical-speed-indicator/indicated-speed-fpm");
+	this->insertion_order->push_back("/controls/flight/aileron");
+	this->insertion_order->push_back("/controls/flight/elevator");
+	this->insertion_order->push_back("/controls/flight/rudder");
+	this->insertion_order->push_back("/controls/flight/flaps");
+	this->insertion_order->push_back("/controls/engines/engine/throttle");
+	this->insertion_order->push_back("/controls/engines/current-engine/throttle");
+	this->insertion_order->push_back("/controls/switches/master-avionics");
+	this->insertion_order->push_back("/controls/switches/starter");
+	this->insertion_order->push_back("/engines/active-engine/auto-start");
+	this->insertion_order->push_back("/controls/flight/speedbrake");
+	this->insertion_order->push_back("/sim/model/c172p/brake-parking");
+	this->insertion_order->push_back("/controls/engines/engine/primer");
+	this->insertion_order->push_back("/controls/engines/current-engine/mixture");
+	this->insertion_order->push_back("/controls/switches/master-bat");
+	this->insertion_order->push_back("/controls/switches/master-alt");
+	this->insertion_order->push_back("/engines/engine/rpm");
 
 
 }
@@ -67,12 +104,11 @@ void ServerSymbolTable::add(std::string path, std::string varName) {
 			insert_list->push_front(varName);
 			this->m->insert({path, insert_list});
 		} else {
-			auto list_at_path = this->m->at(path);
 			// the list isn't null
-			if (list_at_path != nullptr) {
+			if (this->m->at(path) != nullptr) {
 				// but the list doesn't contain the varName
-				if (find(list_at_path->begin(), list_at_path->end(), varName) == list_at_path->end()) {
-					list_at_path->push_front(varName);
+				if (find(this->m->at(path)->begin(), this->m->at(path)->end(), varName) == this->m->at(path)->end()) {
+					this->m->at(path)->push_front(varName);
 				}
 				// else do nothing because the varName is in the list already.
 			} else {
@@ -106,20 +142,35 @@ void ServerSymbolTable::add(std::string path, std::string varName) {
 }
 
 void ServerSymbolTable::updateAtSymbolTable(std::string path, double value, SymbolTable *symbol_table) {
-	using namespace std;
 	// If this path exists
+//	std::cout << "entered the update symbol" << std::endl;
 	if (this->m->find(path) != this->m->end()) {
-		list<std::string> *list_at_path = this->m->at(path);
-		for (auto iterator = list_at_path->begin(); iterator != list_at_path->end(); ++iterator) {
-			//If the value exist in the symbol_table, otherwise there is nothing to update.
-			if (symbol_table->getMap()->find(*iterator) != symbol_table->getMap()->end()) {
-				symbol_table->setVal(*iterator, value);
+//		std::cout << "found the path:" << path << std::endl;
+//		std::list<std::string> *list_at_path = this->m->at(path);
+//		std::cout << "entering the for:" << std::endl;
+//		std::cout << "is the list null right now: " << (this->m->at(path) == nullptr) << std::endl;
+
+		if ((this->m->at(path) != nullptr)) {
+			for (auto &iterator : *this->m->at(path)) {
+				//If the value exist in the symbol_table, otherwise there is nothing to update.
+//				std::cout << "iterating and entering the value:" << value << " to the path" << path << std::endl;
+
+				if (symbol_table->getMap()->find(iterator) != symbol_table->getMap()->end()) {
+//					std::cout << "getting ready to set the val in var: " << iterator << std::endl;
+
+					symbol_table->setVal(iterator, value);
+				}
 			}
 		}
+//		std::cout << "finished iterating" << std::endl;
+
 	}
 }
-std::map<std::string, std::list<std::string> *> *ServerSymbolTable::GetM() const {
+std::unordered_map<std::string, std::list<std::string> *> *ServerSymbolTable::GetM() const {
 	return m;
+}
+std::vector<std::string> *ServerSymbolTable::GetInsertionOrder() const {
+	return insertion_order;
 }
 
 

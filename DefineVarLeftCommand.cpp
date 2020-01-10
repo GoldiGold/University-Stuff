@@ -4,7 +4,10 @@
 #include "DefineVarLeftCommand.h"
 DefineVarLeftCommand::DefineVarLeftCommand(std::string varName, std::string simulator) {
 	name = varName;
+//	std::cout << "define var left name: " << name << std::endl;
 	sim = simulator;
+//	std::cout << "define var left path: " << sim << std::endl;
+
 }
 int DefineVarLeftCommand::execute(std::string var) {
 	SingletonObj::getInstance()->symbol_table_mutex.lock();
