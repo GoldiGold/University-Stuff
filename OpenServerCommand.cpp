@@ -2,7 +2,6 @@
 // Created by חן גולדשטיין on 04/01/2020.
 //
 
-#include <mach/mach_types.h>
 #include "OpenServerCommand.h"
 #define BUFFER_SIZE 1024
 #define VALUES_SIZE 36
@@ -78,14 +77,19 @@ int acceptClient(OpenServerCommand *open_server_command) {
 				int counter = 0;
 				SingletonObj::getInstance()->symbol_table_mutex.lock();
 				SingletonObj::getInstance()->server_symbol_table_mutex.lock();
-
-				for (auto const
-						&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-					SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																							 stod(values[counter]),
-																							 SingletonObj::getInstance()->GetSymbolTable());
-					++counter;
+				if (!temp_values.empty()) {
+					for (auto const
+							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+						try {
+							SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																									 stod(temp_values[counter]),
+																									 SingletonObj::getInstance()->GetSymbolTable());
+						} catch (...){
+							std::cout << "the string is:" << temp_values[counter];
+						}
+						++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+					}
 				}
 				SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 				SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -94,14 +98,19 @@ int acceptClient(OpenServerCommand *open_server_command) {
 					counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
 					SingletonObj::getInstance()->server_symbol_table_mutex.lock();
-
-					for (auto const
-							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-						SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																								 stod(values[counter]),
-																								 SingletonObj::getInstance()->GetSymbolTable());
-						++counter;
+					if (!values.empty()) {
+						for (auto const
+								&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+							try{
+							SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																									 stod(values[counter]),
+																									 SingletonObj::getInstance()->GetSymbolTable());
+							} catch (...){
+								std::cout << "the string is:" << values[counter];
+							}
+							++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 					SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -120,13 +129,19 @@ int acceptClient(OpenServerCommand *open_server_command) {
 					SingletonObj::getInstance()->server_symbol_table_mutex.lock();
 
 //					std::cout << "locked the tables" << std::endl;
-					for (auto const
-							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-						SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																								 stod(values[counter]),
-																								 SingletonObj::getInstance()->GetSymbolTable());
-						++counter;
+					if (!values.empty()) {
+						for (auto const
+								&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+							try{
+							SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																									 stod(values[counter]),
+																									 SingletonObj::getInstance()->GetSymbolTable());
+							} catch (...){
+								std::cout << "the string is:" << values[counter];
+							}
+							++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 					SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -148,13 +163,20 @@ int acceptClient(OpenServerCommand *open_server_command) {
 				SingletonObj::getInstance()->symbol_table_mutex.lock();
 				SingletonObj::getInstance()->server_symbol_table_mutex.lock();
 
-				for (auto const
-						&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-					SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																							 stod(values[counter]),
-																							 SingletonObj::getInstance()->GetSymbolTable());
-					++counter;
+//				if(temp_values != null) {
+				if (!temp_values.empty()) {
+					for (auto const
+							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+						try{
+						SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																								 stod(temp_values[counter]),
+																								 SingletonObj::getInstance()->GetSymbolTable());
+						} catch (...){
+							std::cout << "the string is:" << temp_values[counter];
+						}
+						++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+					}
 				}
 				SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 				SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -163,14 +185,19 @@ int acceptClient(OpenServerCommand *open_server_command) {
 					counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
 					SingletonObj::getInstance()->server_symbol_table_mutex.lock();
-
-					for (auto const
-							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-						SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																								 stod(values[counter]),
-																								 SingletonObj::getInstance()->GetSymbolTable());
-						++counter;
+					if (!values.empty()) {
+						for (auto const
+								&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+							try{
+							SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																									 stod(values[counter]),
+																									 SingletonObj::getInstance()->GetSymbolTable());
+							} catch (...){
+								std::cout << "the string is:" << values[counter];
+							}
+							++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 					SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -186,14 +213,19 @@ int acceptClient(OpenServerCommand *open_server_command) {
 					counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
 					SingletonObj::getInstance()->server_symbol_table_mutex.lock();
-
-					for (auto const
-							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-						SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																								 stod(values[counter]),
-																								 SingletonObj::getInstance()->GetSymbolTable());
-						++counter;
+					if (!values.empty()) {
+						for (auto const
+								&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+							try{
+							SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																									 stod(values[counter]),
+																									 SingletonObj::getInstance()->GetSymbolTable());
+							} catch (...){
+								std::cout << "the string is:" << values[counter];
+							}
+							++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 					SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -208,14 +240,19 @@ int acceptClient(OpenServerCommand *open_server_command) {
 					int counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
 					SingletonObj::getInstance()->server_symbol_table_mutex.lock();
-
-					for (auto const
-							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-						SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																								 stod(values[counter]),
-																								 SingletonObj::getInstance()->GetSymbolTable());
-						++counter;
+					if (!values.empty()) {
+						for (auto const
+								&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+							try{
+							SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																									 stod(values[counter]),
+																									 SingletonObj::getInstance()->GetSymbolTable());
+							} catch (...){
+								std::cout << "the string is:" << values[counter];
+							}
+							++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 					SingletonObj::getInstance()->symbol_table_mutex.unlock();
@@ -231,13 +268,19 @@ int acceptClient(OpenServerCommand *open_server_command) {
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
 					SingletonObj::getInstance()->server_symbol_table_mutex.lock();
 
-					for (auto const
-							&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
-						SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
-																								 stod(values[counter]),
-																								 SingletonObj::getInstance()->GetSymbolTable());
-						++counter;
+					if (!values.empty()) {
+						for (auto const
+								&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
+							try{
+								SingletonObj::getInstance()->GetServerSymbolTable()->updateAtSymbolTable(iterator,
+																									 stod(values[counter]),
+																									 SingletonObj::getInstance()->GetSymbolTable());
+						} catch (...){
+							std::cout << "the string is:" << values[counter];
+						}
+							++counter;
 //						std::cout << "A message has been recieved" << std::endl;
+						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
 					SingletonObj::getInstance()->symbol_table_mutex.unlock();
