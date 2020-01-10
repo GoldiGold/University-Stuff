@@ -20,7 +20,7 @@ ConnectClientCommand::~ConnectClientCommand() = default;
 int connectToServer(ConnectClientCommand *connect_client_command) {
 	//TODO: DONT CONNECT UNTIL YOU CREATED A SERVER.
 
-	std::cout << connect_client_command->GetIpAddress() << std::endl << connect_client_command->GetPort();
+//	std::cout << connect_client_command->GetIpAddress() << std::endl << connect_client_command->GetPort();
 	while (!SingletonObj::getInstance()->IsGlobalHasServerOpened()) {
 		// do nothing - just wait for us to connect to the simulator as a server (the sim is the client) and then
 		// connect as a client
@@ -28,7 +28,7 @@ int connectToServer(ConnectClientCommand *connect_client_command) {
 	int is_connect = connect(connect_client_command->GetSockfd(),
 							 (struct sockaddr *) (connect_client_command->GetServAddr()),
 							 sizeof(*(connect_client_command->GetServAddr())));
-	std::cout<<connect_client_command->GetSockfd() << std::endl;
+//	std::cout<<connect_client_command->GetSockfd() << std::endl;
 	if (is_connect < 0) {
 		std::cerr << "\ncould not connect to host server\n" << std::endl;
 		return -2;
@@ -60,7 +60,7 @@ int ConnectClientCommand::updateVarInSimulator(/*std::string varName, int newVar
 			+ std::to_string(single->GetMessagesQueue()->front().second) + "\r\n";
 		single->GetMessagesQueue()->pop();
 		return_val = write(this->sockfd, message.c_str(), message.length());
-		std::cout << "the message:" << message << std::endl;
+//		std::cout << "the message:" << message << std::endl;
 		return return_val; // A message was sent.
 	}
 	return -1; // No message was sent
