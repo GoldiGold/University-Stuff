@@ -108,16 +108,13 @@ void Parser::execute() {
 
 	for (Command *com: *commands) {
 		// if the command is a Connect Client Command, then we wait for an established connection.
-//		std::cout << "is: " << (typeid(*com) == typeid(ConnectClientCommand)) << std::endl;
 		if (typeid(*com) == typeid(ConnectClientCommand)) {
 			com->execute();
-//			std::cout << "finished creating client VVVVVV" << std::endl;
 
 			while (!SingletonObj::getInstance()->IsHaveConnectedAsClient()) {
 				// do nothing, just wait for the client to connect to the simulator.
 			}
 
-//			std::cout << "finished creating client" << std::endl;
 		} else {
 			com->execute();
 		}

@@ -1,31 +1,26 @@
 #include "Parser.h"
 #include "Lexer.h"
 #include <sstream>
-
-std::vector<std::string> split2(const std::string &s, char delimiter) {
-	std::vector<std::string> tokens;
-	std::string token;
-	std::istringstream tokenStream(s);
-	while (std::getline(tokenStream, token, delimiter)) {
-		tokens.push_back(token);
-	}
-	return tokens;
-}
+//
+//std::vector<std::string> split2(const std::string &s, char delimiter) {
+//	std::vector<std::string> tokens;
+//	std::string token;
+//	std::istringstream tokenStream(s);
+//	while (std::getline(tokenStream, token, delimiter)) {
+//		tokens.push_back(token);
+//	}
+//	return tokens;
+//}
 
 int main(int argc, char **argv) {
 	using namespace std;
-//	cout << "work?" << endl;
 	auto lex = 	new Lexer();
-//	cout << "work2" << endl;
 
 	auto l = lex->lexer(argv[argc - 1]);
-//	cout << "work3" << endl;
 
 	Parser *par = new Parser(l);
-//	cout << "work4" << endl;
 
 	par->execute();
-//	cout << "work5" << endl;
 
 	delete lex;
 	delete par;

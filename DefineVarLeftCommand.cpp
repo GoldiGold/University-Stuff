@@ -4,9 +4,7 @@
 #include "DefineVarLeftCommand.h"
 DefineVarLeftCommand::DefineVarLeftCommand(std::string varName, std::string simulator) {
 	name = varName;
-//	std::cout << "define var left name: " << name << std::endl;
 	sim = simulator;
-//	std::cout << "define var left path: " << sim << std::endl;
 
 }
 void DefineVarLeftCommand::execute() {

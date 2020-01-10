@@ -143,26 +143,19 @@ void ServerSymbolTable::add(std::string path, std::string varName) {
 
 void ServerSymbolTable::updateAtSymbolTable(std::string path, double value, SymbolTable *symbol_table) {
 	// If this path exists
-//	std::cout << "entered the update symbol" << std::endl;
 	if (this->m->find(path) != this->m->end()) {
-//		std::cout << "found the path:" << path << std::endl;
 //		std::list<std::string> *list_at_path = this->m->at(path);
-//		std::cout << "entering the for:" << std::endl;
-//		std::cout << "is the list null right now: " << (this->m->at(path) == nullptr) << std::endl;
 
 		if ((this->m->at(path) != nullptr)) {
 			for (auto &iterator : *this->m->at(path)) {
 				//If the value exist in the symbol_table, otherwise there is nothing to update.
-//				std::cout << "iterating and entering the value:" << value << " to the path" << path << std::endl;
 
 				if (symbol_table->getMap()->find(iterator) != symbol_table->getMap()->end()) {
-//					std::cout << "getting ready to set the val in var: " << iterator << std::endl;
 
 					symbol_table->setVal(iterator, value);
 				}
 			}
 		}
-//		std::cout << "finished iterating" << std::endl;
 
 	}
 }

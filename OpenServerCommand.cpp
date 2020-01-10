@@ -49,7 +49,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 	 * 4565\n1,2,3,4,5
 	 */
 
-//	std::cout << "we have a connection to the client" << std::endl;
 	char buffer[BUFFER_SIZE];
 	bool need_complete = false; // indicates if the previous buffer needed completion.
 	std::vector<std::string> sub_n;
@@ -65,9 +64,7 @@ int acceptClient(OpenServerCommand *open_server_command) {
 //		std::cout << "the buffer has: " << t << std::endl;
 
 		if (size < 1024) { // the buffer hasn't filled up:
-//			std::cout << "the buffer has lass than 1024" << std::endl;
 			if (need_complete) {
-//				std::cout << "there is a need to complete" << std::endl;
 
 				temp_sub_n = split(t, '\n');
 				// appending the reminder from the new buffer to the string of 36 values
@@ -88,7 +85,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 							std::cout << "the string is:" << temp_values[counter];
 						}
 						++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 					}
 				}
 				SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -109,7 +105,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 								std::cout << "the string is:" << values[counter];
 							}
 							++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -118,17 +113,13 @@ int acceptClient(OpenServerCommand *open_server_command) {
 
 				need_complete = false; // because the buffer isn't full.
 			} else {
-//				std::cout << "there is no need to complete" << std::endl;
 				sub_n = split(t, '\n');
-//				std::cout << "created sub_n" << std::endl;
 				for (int kI = 0; kI < signed(sub_n.size()); ++kI) {
 					values = split(sub_n[kI], ',');
-//					std::cout << "created the values" << std::endl;
 					int counter = 0;
 					SingletonObj::getInstance()->symbol_table_mutex.lock();
 					SingletonObj::getInstance()->server_symbol_table_mutex.lock();
 
-//					std::cout << "locked the tables" << std::endl;
 					if (!values.empty()) {
 						for (auto const
 								&iterator : *SingletonObj::getInstance()->GetServerSymbolTable()->GetInsertionOrder()) {
@@ -140,7 +131,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 								std::cout << "the string is:" << values[counter];
 							}
 							++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -150,10 +140,8 @@ int acceptClient(OpenServerCommand *open_server_command) {
 			}
 
 		} else { // size == 1024
-//			std::cout << "the buffer has 1024" << std::endl;
 			last = buffer[BUFFER_SIZE - 1];
 			if (need_complete) {
-//				std::cout << "there is a need to complete" << std::endl;
 				temp_sub_n = split(t, '\n');
 				// appending the reminder from the new buffer to the string of 36 values
 				sub_n[sub_n.size() - 1].append(temp_sub_n[0]);
@@ -175,7 +163,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 							std::cout << "the string is:" << temp_values[counter];
 						}
 						++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 					}
 				}
 				SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -196,7 +183,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 								std::cout << "the string is:" << values[counter];
 							}
 							++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -224,7 +210,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 								std::cout << "the string is:" << values[counter];
 							}
 							++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -233,7 +218,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 
 				}
 			} else {
-//				std::cout << "there is no need to complete" << std::endl;
 				sub_n = split(t, '\n');
 				for (int kI = 0; kI < signed(sub_n.size() - 1); ++kI) {
 					values = split(sub_n[kI], ',');
@@ -251,7 +235,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 								std::cout << "the string is:" << values[counter];
 							}
 							++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -279,7 +262,6 @@ int acceptClient(OpenServerCommand *open_server_command) {
 							std::cout << "the string is:" << values[counter];
 						}
 							++counter;
-//						std::cout << "A message has been recieved" << std::endl;
 						}
 					}
 					SingletonObj::getInstance()->server_symbol_table_mutex.unlock();
@@ -331,7 +313,6 @@ void OpenServerCommand::execute() {
 	this->serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	this->serv_addr.sin_port = htons(this->port);
 
-//	std::cout << "we have a Created the socket of the server" << std::endl;
 
 //	TODO: CREATE THE THREAD AND START RECEIVING STUFF ( OR SOMEHOW, TALK TO MILO)
 	std::thread openServer(acceptClient, this);
