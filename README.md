@@ -13,8 +13,16 @@ and in order to run:
 
 when code_file.txt is the file with the code that control the simulator.
 
-Important!!! when you open the simulator go to: settings->Additional Settings  and write there: ‫‪--telnet=socket,in,10,127.0.0.1,5402,tcp‬‬
+Important!!! when you open the simulator go to: settings->Additional Settings  and write there:
+‫‪--telnet=socket,in,10,127.0.0.1,5402,tcp‬‬
+
+(and if you want to see updates in the web browser use the line: 
+  ‫‪--telnet=socket,in,10,127.0.0.1,5402,tcp‬‬ --httpd=8080)
 This command open a server which our program will conect while run time.
+
+And then write (under the previous line): --generic=socket,out,10,127.0.0.1,5400,tcp,generic_small
+that specify the simulator what kinds of values we are going to sample. make sure that the file: 
+generic_small.xml is in the same place as the simulator and inside the folder data/protocol .
 
 ##Code File (code_file.txt)
 In this file you write yor commands for the simulator. In order to connect the simulator use in the begining of the code file this two commands:
